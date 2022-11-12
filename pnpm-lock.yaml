@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@sveltejs/adapter-auto': next
   '@sveltejs/kit': next
+  open-props: ^1.4.24
   prettier: ^2.6.2
   prettier-plugin-svelte: ^2.7.0
   svelte: ^3.44.0
@@ -15,6 +16,7 @@ specifiers:
 devDependencies:
   '@sveltejs/adapter-auto': 1.0.0-next.87
   '@sveltejs/kit': 1.0.0-next.544_svelte@3.53.1+vite@3.2.3
+  open-props: 1.4.24
   prettier: 2.7.1
   prettier-plugin-svelte: 2.8.0_nryolsexf6k3znhuh4uzpugsem
   svelte: 3.53.1
@@ -961,6 +963,10 @@ packages:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
     dependencies:
       wrappy: 1.0.2
+    dev: true
+
+  /open-props/1.4.24:
+    resolution: {integrity: sha512-sRJLPVyN0REcjZDfyJ1baTFq+kXPBsAtivi9j/6JbaFP8epuRpmRmzS+BTpezfvnSdpKFdg4zUbjPlXl382VAg==}
     dev: true
 
   /parent-module/1.0.1:
