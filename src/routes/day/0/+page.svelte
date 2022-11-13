@@ -124,6 +124,7 @@
 		padding: 0.25rem 1rem;
 		cursor: pointer;
 		font-size: var(--size-5);
+		color: black;
 	}
 
 	button:hover {
