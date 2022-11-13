@@ -110,6 +110,7 @@
 		aspect-ratio: 1/1;
 		background: white;
 		padding: 0.5rem;
+		height: 100px;
 	}
 
 	.status {
