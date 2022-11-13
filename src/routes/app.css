@@ -15,6 +15,11 @@
 	margin: 0;
 }
 
+*:focus-visible {
+	outline: solid var(--svelte);
+	outline-offset: var(--size-1);
+}
+
 html,
 body,
 body > div {

@@ -8,10 +8,12 @@
 
 <div class="container">
 	<header>
-		<div>Advent of <s class="vue">Vue</s> <span class="svelte">SvelteKit</span> 2022</div>
+		<a href="/">Advent of <s class="vue">Vue</s> <span class="svelte">SvelteKit</span> 2022</a>
 	</header>
 
-	<slot />
+	<div>
+		<slot />
+	</div>
 
 	<footer>
 		<p>Solutions by <a href="https://geoffrich.net">Geoff Rich</a></p>
@@ -28,6 +30,10 @@
 	header {
 		font-size: var(--font-size-fluid-2);
 		font-weight: var(--font-weight-7);
+	}
+
+	header a {
+		color: black;
 	}
 
 	.svelte {
