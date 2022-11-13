@@ -4,11 +4,7 @@
 	import EmptyCell from './EmptyCell.svelte';
 	import { tick } from 'svelte';
 
-	let board: Move[][] = [
-		[Move.X, Move.Empty, Move.Empty],
-		[Move.Empty, Move.O, Move.O],
-		[Move.X, Move.Empty, Move.Empty]
-	];
+	let board = getEmptyBoard();
 
 	let turn = Move.O;
 	let state = State.Playing;
@@ -42,15 +38,19 @@
 	}
 
 	function reset() {
-		board = [
-			[Move.Empty, Move.Empty, Move.Empty],
-			[Move.Empty, Move.Empty, Move.Empty],
-			[Move.Empty, Move.Empty, Move.Empty]
-		];
+		board = getEmptyBoard();
 
 		turn = Move.O;
 		winner = undefined;
 		tick().then(focusNextAvailableTile);
+	}
+
+	function getEmptyBoard() {
+		return [
+			[Move.Empty, Move.Empty, Move.Empty],
+			[Move.Empty, Move.Empty, Move.Empty],
+			[Move.Empty, Move.Empty, Move.Empty]
+		];
 	}
 </script>
 
