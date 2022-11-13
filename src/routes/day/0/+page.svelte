@@ -2,6 +2,7 @@
 	import { Move, checkWinner, State } from './util';
 	import Icon from './Icon.svelte';
 	import EmptyCell from './EmptyCell.svelte';
+	import { tick } from 'svelte';
 
 	let board: Move[][] = [
 		[Move.X, Move.Empty, Move.Empty],
@@ -11,10 +12,21 @@
 
 	let turn = Move.O;
 	let state = State.Playing;
+	let boardEl: HTMLElement, statusEl: HTMLElement;
 
 	function place(row: number, col: number) {
 		board[row][col] = turn;
 		turn = turn === Move.O ? Move.X : Move.O;
+		tick().then(focusNextAvailableTile);
+	}
+
+	function focusNextAvailableTile() {
+		const nextTile = boardEl.querySelector('button:not(:disabled');
+		if (nextTile) {
+			(nextTile as HTMLElement).focus();
+		} else {
+			statusEl.focus();
+		}
 	}
 
 	$: winner = checkWinner(board);
@@ -38,27 +50,30 @@
 
 		turn = Move.O;
 		winner = undefined;
+		tick().then(focusNextAvailableTile);
 	}
 </script>
 
 <main>
 	<h1>Day 0</h1>
 
-	<div class="board">
+	<div class="board" bind:this={boardEl}>
 		{#each board as row, r}
 			{#each row as col, c}
 				<div class="cell">
 					{#if col !== Move.Empty}
 						<Icon move={col} />
 					{:else}
-						<EmptyCell on:click={() => place(r, c)} disabled={state !== State.Playing} />
+						<EmptyCell on:click={() => place(r, c)} disabled={state !== State.Playing}>
+							<span class="visually-hidden">Place row {r + 1} column {c + 1}</span>
+						</EmptyCell>
 					{/if}
 				</div>
 			{/each}
 		{/each}
 	</div>
 
-	<div class="status">
+	<div class="status" bind:this={statusEl} tabindex="-1">
 		{#if state === State.Won}
 			{winner} won.
 		{:else if state === State.Draw}

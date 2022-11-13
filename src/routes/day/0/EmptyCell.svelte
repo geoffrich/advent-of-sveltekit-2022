@@ -2,7 +2,9 @@
 	export let disabled = false;
 </script>
 
-<button on:click {disabled}>Place</button>
+<button on:click {disabled}>
+	<slot />
+</button>
 
 <style>
 	button {
