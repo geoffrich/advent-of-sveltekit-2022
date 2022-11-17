@@ -17,7 +17,7 @@
 	}
 
 	function focusNextAvailableTile() {
-		const nextTile = boardEl.querySelector('button:not(:disabled');
+		const nextTile = boardEl.querySelector('button:not(:disabled)');
 		if (nextTile) {
 			(nextTile as HTMLElement).focus();
 		} else {
