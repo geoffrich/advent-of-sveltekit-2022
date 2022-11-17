@@ -26,16 +26,7 @@
 	}
 
 	$: winner = checkWinner(board);
-
-	$: {
-		if (winner) {
-			state = State.Won;
-		} else if (board.every((row) => row.every((col) => col !== Move.Empty))) {
-			state = State.Draw;
-		} else {
-			state = State.Playing;
-		}
-	}
+	$: state = getGameState(winner, board);
 
 	function reset() {
 		board = getEmptyBoard();
@@ -51,6 +42,16 @@
 			[Move.Empty, Move.Empty, Move.Empty],
 			[Move.Empty, Move.Empty, Move.Empty]
 		];
+	}
+
+	function getGameState(winner: Move | undefined, board: Move[][]) {
+		if (winner) {
+			return State.Won;
+		} else if (board.every((row) => row.every((col) => col !== Move.Empty))) {
+			return State.Draw;
+		} else {
+			return State.Playing;
+		}
 	}
 </script>
 
