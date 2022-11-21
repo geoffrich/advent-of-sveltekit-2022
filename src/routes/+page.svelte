@@ -5,7 +5,8 @@
 <main>
 	<p>
 		The <a href="https://adventofvue.com/">Advent of Vue</a> challenges, but in
-		<a href="https://kit.svelte.dev/">SvelteKit</a>.
+		<a href="https://kit.svelte.dev/">SvelteKit</a>. Code for my solutions is available on
+		<a href="https://github.com/geoffrich/advent-of-sveltekit-2022">GitHub</a>
 	</p>
 	<ul>
 		{#each { length: MAX_DAY + 1 } as _, idx}

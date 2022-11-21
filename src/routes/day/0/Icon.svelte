@@ -31,6 +31,6 @@
 	{#if move === Move.X}
 		X
 	{:else}
-		Y
+		O
 	{/if}
 </span>

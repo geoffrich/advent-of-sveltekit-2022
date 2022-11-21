@@ -30,9 +30,6 @@
 
 	function reset() {
 		board = getEmptyBoard();
-
-		turn = Move.O;
-		winner = undefined;
 		tick().then(focusNextAvailableTile);
 	}
 
