@@ -10,6 +10,7 @@
 </script>
 
 {#if data.products && data.products.length > 0}
+	<p>Showing {data.skip + 1} - {data.skip + data.limit} of {data.total} results</p>
 	<ul in:fade={{ duration: 200 }}>
 		{#each data.products as product (product.id)}
 			<li>{product.title} - ${product.price}</li>
@@ -17,10 +18,10 @@
 	</ul>
 	<div class="links">
 		{#if showPrev}
-			<a href="?q={query}&skip={data.skip - data.limit}">Previous Page</a>
+			<a href="?q={query}&skip={data.skip - 30}">Previous Page</a>
 		{/if}
 		{#if showNext}
-			<a href="?q={query}&skip={data.skip + data.limit}">Next Page</a>
+			<a href="?q={query}&skip={data.skip + 30}">Next Page</a>
 		{/if}
 	</div>
 {:else}
