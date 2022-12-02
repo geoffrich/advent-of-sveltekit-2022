@@ -8,8 +8,15 @@
 	export let data: PageData;
 
 	let form: HTMLFormElement;
+	// intentionally not reactive - we don't want to clobber the input on subsequent navigations
+	let initialValue = data.query;
 
-	const debouncedSubmit = debounce(() => form.requestSubmit(), 300);
+	const debouncedSubmit = debounce(() => {
+		// not supported in all browsers
+		if (typeof HTMLFormElement.prototype.requestSubmit == 'function') {
+			form.requestSubmit();
+		}
+	}, 300);
 
 	// the SvelteKit router will handle this automatically, but we'll implement ourselves so we can use `replaceState`
 	// alternatively, don't handle the submit and accept the new history entries and focus reset
@@ -35,8 +42,12 @@
 			type="text"
 			name="q"
 			placeholder="Start typing..."
+			autocomplete="off"
+			autocorrect="off"
+			autocapitalize="off"
+			spellcheck="false"
 			on:input={debouncedSubmit}
-			value={data.query}
+			value={initialValue}
 		/>
 		<div role="status" class="spin">
 			{#if isLoading}
