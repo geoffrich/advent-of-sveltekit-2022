@@ -1,5 +1,5 @@
 <script>
-	const MAX_DAY = 0;
+	const MAX_DAY = 1;
 </script>
 
 <main>

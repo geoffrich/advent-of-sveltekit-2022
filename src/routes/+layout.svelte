@@ -1,9 +1,16 @@
 <script>
 	import './app.css';
+	import { page } from '$app/stores';
+
+	$: day = $page.route.id?.split('/').at(-1);
 </script>
 
 <svelte:head>
-	<title>Advent of SvelteKit</title>
+	{#if day}
+		<title>Advent of SvelteKit - Day {day}</title>
+	{:else}
+		<title>Advent of SvelteKit</title>
+	{/if}
 </svelte:head>
 
 <div class="container">
