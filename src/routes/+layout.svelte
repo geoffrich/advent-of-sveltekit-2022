@@ -1,8 +1,14 @@
-<script>
+<script lang="ts">
 	import './app.css';
 	import { page } from '$app/stores';
+	import type { Page } from '@sveltejs/kit';
 
-	$: day = $page.route.id?.split('/').at(-1);
+	$: day = getDay($page);
+
+	function getDay(page: Page) {
+		const segments = page.route.id?.split('/');
+		return segments?.[segments.length - 1];
+	}
 </script>
 
 <svelte:head>
