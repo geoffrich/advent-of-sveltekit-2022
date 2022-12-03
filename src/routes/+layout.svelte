@@ -21,12 +21,12 @@
 
 <div class="container">
 	<header>
-		<a href="/">Advent of <s class="vue">Vue</s> <span class="svelte">SvelteKit</span> 2022</a>
+		<a href="/">Advent of <span class="svelte">SvelteKit</span> 2022</a>
 	</header>
 
-	<div>
+	<main>
 		<slot />
-	</div>
+	</main>
 
 	<footer>
 		<p>Solutions by <a href="https://geoffrich.net">Geoff Rich</a></p>
@@ -53,15 +53,21 @@
 		color: var(--svelte);
 	}
 
-	.vue {
-		color: var(--vue);
-	}
-
 	.container {
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: auto 1fr auto;
 		height: 100%;
 		justify-content: start;
+	}
+
+	main {
+		max-width: var(--size-content-3);
+		margin: 0 auto 1rem auto;
+		padding: 0.5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
 	}
 </style>

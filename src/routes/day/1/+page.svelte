@@ -33,49 +33,37 @@
 	$: isLoading = $navigating?.to?.url.pathname === $page.url.pathname;
 </script>
 
-<main>
-	<h1>Gift Search Bar</h1>
-	<form bind:this={form} on:submit|preventDefault={handleSubmit}>
-		<label for="q">Query</label>
-		<input
-			id="q"
-			type="text"
-			name="q"
-			placeholder="Start typing..."
-			autocomplete="off"
-			autocorrect="off"
-			autocapitalize="off"
-			spellcheck="false"
-			on:input={debouncedSubmit}
-			value={initialValue}
-		/>
-		<div role="status" class="spin">
-			{#if isLoading}
-				<Spinner />
-				<span class="visually-hidden">Loading...</span>
-			{/if}
-		</div>
-	</form>
+<h1>Gift Search Bar</h1>
+<form bind:this={form} on:submit|preventDefault={handleSubmit}>
+	<label for="q">Query</label>
+	<input
+		id="q"
+		type="text"
+		name="q"
+		placeholder="Start typing..."
+		autocomplete="off"
+		autocorrect="off"
+		autocapitalize="off"
+		spellcheck="false"
+		on:input={debouncedSubmit}
+		value={initialValue}
+	/>
+	<div role="status" class="spin">
+		{#if isLoading}
+			<Spinner />
+			<span class="visually-hidden">Loading...</span>
+		{/if}
+	</div>
+</form>
 
-	{#if data.result}
-		<Products data={data.result} query={data.query} />
-	{:else if data.error}
-		<p class="error">Error: {data.error}</p>
-	{/if}
-	<p>(To see error handling, try searching for "bad".)</p>
-</main>
+{#if data.result}
+	<Products data={data.result} query={data.query} />
+{:else if data.error}
+	<p class="error">Error: {data.error}</p>
+{/if}
+<p>(To see error handling, try searching for "bad".)</p>
 
 <style>
-	main {
-		max-width: var(--size-content-3);
-		margin: 0 auto 1rem auto;
-		padding: 0.5rem;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1rem;
-	}
-
 	label {
 		display: block;
 	}

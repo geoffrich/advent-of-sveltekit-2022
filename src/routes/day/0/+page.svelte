@@ -52,39 +52,37 @@
 	}
 </script>
 
-<main>
-	<h1>Day 0</h1>
+<h1>Tic-tac-toe</h1>
 
-	<div class="board" bind:this={boardEl}>
-		{#each board as row, r}
-			{#each row as col, c}
-				<div class="cell">
-					{#if col !== Move.Empty}
-						<Icon move={col} />
-					{:else}
-						<EmptyCell on:click={() => place(r, c)} disabled={state !== State.Playing}>
-							<span class="visually-hidden">Place row {r + 1} column {c + 1}</span>
-						</EmptyCell>
-					{/if}
-				</div>
-			{/each}
+<div class="board" bind:this={boardEl}>
+	{#each board as row, r}
+		{#each row as col, c}
+			<div class="cell">
+				{#if col !== Move.Empty}
+					<Icon move={col} />
+				{:else}
+					<EmptyCell on:click={() => place(r, c)} disabled={state !== State.Playing}>
+						<span class="visually-hidden">Place row {r + 1} column {c + 1}</span>
+					</EmptyCell>
+				{/if}
+			</div>
 		{/each}
-	</div>
+	{/each}
+</div>
 
-	<div class="status" bind:this={statusEl} tabindex="-1">
-		{#if state === State.Won}
-			{winner} won.
-		{:else if state === State.Draw}
-			It's a draw!
-		{:else}
-			It's {turn}'s turn
-		{/if}
-	</div>
-
-	{#if state !== State.Playing}
-		<button on:click={reset}>Play again?</button>
+<div class="status" bind:this={statusEl} tabindex="-1">
+	{#if state === State.Won}
+		{winner} won.
+	{:else if state === State.Draw}
+		It's a draw!
+	{:else}
+		It's {turn}'s turn
 	{/if}
-</main>
+</div>
+
+{#if state !== State.Playing}
+	<button on:click={reset}>Play again?</button>
+{/if}
 
 <style>
 	.board {
@@ -93,15 +91,6 @@
 		grid-template-rows: repeat(3, auto);
 		gap: 0.25rem;
 		background: var(--gray-4);
-	}
-
-	main {
-		max-width: var(--size-content-3);
-		margin: 0 auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1rem;
 	}
 
 	.cell {
