@@ -60,6 +60,7 @@
 
 	button {
 		position: relative;
+		color: black;
 		--fill: var(--gray-3);
 		--bg: black;
 	}
