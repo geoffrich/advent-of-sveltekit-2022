@@ -16,7 +16,7 @@
 }
 
 *:focus-visible {
-	outline: solid var(--svelte);
+	outline: solid var(--outline-color, var(--svelte));
 	outline-offset: var(--size-1);
 }
 

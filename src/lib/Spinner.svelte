@@ -11,10 +11,10 @@
 
 <style>
 	svg {
-		fill: var(--blue-5);
+		fill: var(--fill, var(--blue-5));
 		animation: var(--animation-spin);
 		animation-duration: 1s;
-		color: var(--gray-4);
+		color: var(--bg, var(--gray-4));
 		height: 1.5rem;
 		width: 1.5rem;
 	}

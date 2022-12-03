@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { page, navigating } from '$app/stores';
 	import debounce from 'just-debounce-it';
-	import Spinner from './Spinner.svelte';
+	import Spinner from '$lib/Spinner.svelte';
 	import Products from './Products.svelte';
 	export let data: PageData;
 
