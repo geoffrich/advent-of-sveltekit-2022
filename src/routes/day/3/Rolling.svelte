@@ -9,7 +9,7 @@
 </script>
 
 {#key key}
-	<dd in:fly={{ y: -1 * distance, ...common }} out:fly|local={{ y: distance, ...common }}>
+	<dd in:fly|local={{ y: -1 * distance, ...common }} out:fly|local={{ y: distance, ...common }}>
 		<slot />
 	</dd>
 {/key}
