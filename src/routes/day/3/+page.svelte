@@ -5,11 +5,11 @@
 
 	export let data: PageData;
 
-	const target = new Date(data.target);
+	const target = data.target;
 	const SECONDS_IN_DAY = 60 * 60 * 24;
 	const SECONDS_IN_HOUR = 60 * 60;
 
-	const now = readable(new Date(data.date), (set) => {
+	const now = readable(data.date, (set) => {
 		const id = setInterval(() => set(new Date()), 1000);
 		return () => {
 			clearInterval(id);

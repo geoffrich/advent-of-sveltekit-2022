@@ -13,8 +13,8 @@ export const load: PageServerLoad = ({ request }) => {
 
 	return {
 		// tried returning dates, but something got lost over the wire
-		date: new Date().getTime(),
-		target: targetDateTime.getTime(),
+		date: new Date(),
+		target: targetDateTime,
 		timezone
 	};
 };
