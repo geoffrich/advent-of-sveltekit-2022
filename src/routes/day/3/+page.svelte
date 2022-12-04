@@ -9,7 +9,7 @@
 	const SECONDS_IN_DAY = 60 * 60 * 24;
 	const SECONDS_IN_HOUR = 60 * 60;
 
-	const now = readable(data.date, (set) => {
+	const now = readable(new Date(), (set) => {
 		const id = setInterval(() => set(new Date()), 1000);
 		return () => {
 			clearInterval(id);

@@ -12,8 +12,6 @@ export const load: PageServerLoad = ({ request }) => {
 	const targetDateTime = zonedTimeToUtc('2022-12-25 00:00:00', timezone);
 
 	return {
-		// tried returning dates, but something got lost over the wire
-		date: new Date(),
 		target: targetDateTime,
 		timezone
 	};
