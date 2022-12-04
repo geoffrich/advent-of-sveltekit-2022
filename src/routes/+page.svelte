@@ -1,5 +1,10 @@
 <script>
-	const titles = ['Tic-tac-toe', 'Gift search bar', 'Christmas joke generator'];
+	const titles = [
+		'Tic-tac-toe',
+		'Gift search bar',
+		'Christmas joke generator',
+		'Christmas countdown'
+	];
 </script>
 
 <p>
