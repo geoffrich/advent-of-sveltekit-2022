@@ -20,6 +20,10 @@
 	outline-offset: var(--size-1);
 }
 
+body:focus-visible {
+	outline: none;
+}
+
 html,
 body,
 body > div {
