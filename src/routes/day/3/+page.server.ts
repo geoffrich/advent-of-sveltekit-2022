@@ -8,15 +8,13 @@ const TZ_HEADER = 'x-vercel-ip-timezone';
 
 export const load: PageServerLoad = ({ request }) => {
 	const timezone = request.headers.get(TZ_HEADER) ?? 'America/Los_Angeles';
-	// get the current date in the timezone of the requester
-	const localDateTime = new Date().toLocaleString('en-US', { timeZone: timezone });
 	// get Christmas in the local time and convert to UTC
 	const targetDateTime = zonedTimeToUtc('2022-12-25 00:00:00', timezone);
 
 	return {
 		// tried returning dates, but something got lost over the wire
 		date: new Date().getTime(),
-		target: new Date(targetDateTime).getTime(),
+		target: targetDateTime.getTime(),
 		timezone
 	};
 };
