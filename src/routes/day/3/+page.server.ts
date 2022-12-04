@@ -15,7 +15,7 @@ export const load: PageServerLoad = ({ request }) => {
 
 	return {
 		// tried returning dates, but something got lost over the wire
-		date: new Date(localDateTime).getTime(),
+		date: new Date().getTime(),
 		target: new Date(targetDateTime).getTime(),
 		timezone
 	};
