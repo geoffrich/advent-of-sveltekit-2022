@@ -5,7 +5,7 @@
 
 	export let data: PageData;
 
-	const target = new Date(2022, 11, 25);
+	const target = data.target;
 	const SECONDS_IN_DAY = 60 * 60 * 24;
 	const SECONDS_IN_HOUR = 60 * 60;
 
