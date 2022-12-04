@@ -3,7 +3,8 @@
 		'Tic-tac-toe',
 		'Gift search bar',
 		'Christmas joke generator',
-		'Christmas countdown'
+		'Christmas countdown',
+		'Recursive Christmas tree'
 	];
 </script>
 
