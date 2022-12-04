@@ -1,5 +1,7 @@
 import type { PageServerLoad } from './$types';
-import { zonedTimeToUtc } from 'date-fns-tz';
+import dateFnsTz from 'date-fns-tz';
+
+const { zonedTimeToUtc } = dateFnsTz;
 
 // https://vercel.com/docs/concepts/edge-network/headers#x-vercel-ip-timezone
 const TZ_HEADER = 'x-vercel-ip-timezone';
