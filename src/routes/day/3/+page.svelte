@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { readable, derived } from 'svelte/store';
+	import Rolling from './Rolling.svelte';
 
 	const target = new Date(2022, 11, 25);
 	const SECONDS_IN_DAY = 60 * 60 * 24;
@@ -33,13 +34,21 @@
 	<h1>Christmas Countdown</h1>
 	<dl>
 		<dt>Days</dt>
-		<dd>{days}</dd>
+		<Rolling key={days} --area="days">
+			{days}
+		</Rolling>
 		<dt>Hours</dt>
-		<dd>{hours}</dd>
+		<Rolling key={hours} --area="hours">
+			{hours}
+		</Rolling>
 		<dt>Minutes</dt>
-		<dd>{minutes}</dd>
+		<Rolling key={minutes} --area="minutes">
+			{minutes}
+		</Rolling>
 		<dt>Seconds</dt>
-		<dd>{seconds}</dd>
+		<Rolling key={seconds} --area="seconds">
+			{seconds}
+		</Rolling>
 	</dl>
 </div>
 
@@ -62,16 +71,17 @@
 	dl {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
+		grid-template-areas: 'days hours minutes seconds';
 		text-transform: lowercase;
 		gap: 0.25rem;
+		overflow: hidden;
 	}
 
 	dt {
 		grid-row: 2;
-	}
 
-	dd {
-		grid-row: 1;
-		font-size: var(--font-size-5);
+		/* Allow the rolling number to go behind this row */
+		z-index: 1;
+		background: white;
 	}
 </style>
