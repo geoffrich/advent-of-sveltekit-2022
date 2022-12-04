@@ -1,16 +1,12 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { readable, derived } from 'svelte/store';
-	import type { PageData } from './$types';
 	import Rolling from './Rolling.svelte';
 
-	export let data: PageData;
-
-	const target = browser ? new Date(2022, 11, 25) : data.target;
+	const target = new Date(2022, 11, 25);
 	const SECONDS_IN_DAY = 60 * 60 * 24;
 	const SECONDS_IN_HOUR = 60 * 60;
 
-	const now = readable(data.date, (set) => {
+	const now = readable(new Date(), (set) => {
 		const id = setInterval(() => set(new Date()), 1000);
 		return () => {
 			clearInterval(id);
