@@ -1,12 +1,5 @@
 <script>
-	const titles = [
-		'Tic-tac-toe',
-		'Gift search bar',
-		'Christmas joke generator',
-		'Christmas countdown',
-		'Recursive Christmas tree',
-		'Gift label'
-	];
+	import { days } from './days';
 </script>
 
 <p>
@@ -18,9 +11,9 @@
 	Many of the solutions work without JavaScript through the magic of ✨ progressive enhancement ✨
 </p>
 <ol start="0">
-	{#each titles as title, idx}
+	{#each days as day, idx}
 		<li>
-			<a href="/day/{idx}">{title}</a>
+			<a href="/day/{idx}">{day}</a>
 			<a
 				class="code"
 				href="https://github.com/geoffrich/advent-of-sveltekit-2022/tree/main/src/routes/day/{idx}/+page.svelte"
