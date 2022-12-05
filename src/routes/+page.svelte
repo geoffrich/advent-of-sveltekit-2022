@@ -1,5 +1,5 @@
 <script>
-	import { days } from './days';
+	import { days } from '$lib/days';
 </script>
 
 <p>
