@@ -17,7 +17,6 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
-		flex-shrink: 1;
 	}
 
 	.leaf {
@@ -27,6 +26,5 @@
 		width: var(--size-9);
 		height: var(--size-9);
 		margin: -0.5rem;
-		flex-shrink: 1;
 	}
 </style>

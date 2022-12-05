@@ -4,7 +4,8 @@
 		'Gift search bar',
 		'Christmas joke generator',
 		'Christmas countdown',
-		'Recursive Christmas tree'
+		'Recursive Christmas tree',
+		'Gift label'
 	];
 </script>
 

@@ -2,13 +2,15 @@
 	import Prism from 'prismjs';
 	import 'prism-svelte';
 	import 'prismjs/themes/prism-tomorrow.css';
+	import type { fly } from 'svelte/transition';
 
 	export let source: string;
+	export let transition: typeof fly = () => ({});
 
 	const highlighted = Prism.highlight(source, Prism.languages.svelte, 'svelte');
 </script>
 
-<pre><code>{@html highlighted}</code></pre>
+<pre in:transition><code>{@html highlighted}</code></pre>
 
 <style>
 	pre {
