@@ -16,7 +16,7 @@
 	<svelte:element
 		this={showPrev ? 'a' : 'div'}
 		class="item"
-		href="/day/{day - 1}"
+		href={showPrev ? `/day/${day - 1}` : null}
 		aria-hidden={showPrev ? undefined : 'true'}
 	>
 		<span class="visually-hidden">Previous day</span>
@@ -41,7 +41,7 @@
 	<svelte:element
 		this={showNext ? 'a' : 'div'}
 		class="item"
-		href="/day/{day + 1}"
+		href={showNext ? `/day/${day + 1}` : null}
 		aria-hidden={showNext ? undefined : 'true'}
 	>
 		<span class="visually-hidden">Next day</span>

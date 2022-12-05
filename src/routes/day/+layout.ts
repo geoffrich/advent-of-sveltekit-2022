@@ -1,5 +1,4 @@
 import type { LayoutLoad } from './$types';
-import { days } from '$lib/days';
 
 // https://vitejs.dev/guide/features.html#glob-import
 const globs = import.meta.glob(`./**/*.svelte`, { as: 'raw' });
