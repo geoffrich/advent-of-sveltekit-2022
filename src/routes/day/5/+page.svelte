@@ -21,10 +21,10 @@
 
 <form in:fade class="flow">
 	<label for="to">To</label>
-	<input id="to" name="to" bind:value={to} maxlength="30" />
+	<input id="to" name="to" bind:value={to} maxlength="30" autocomplete="off" />
 
 	<label for="from">From</label>
-	<input id="from" name="from" bind:value={from} maxlength="30" />
+	<input id="from" name="from" bind:value={from} maxlength="30" autocomplete="off" />
 	<input type="submit" hidden />
 </form>
 

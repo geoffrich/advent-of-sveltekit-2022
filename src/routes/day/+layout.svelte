@@ -121,6 +121,8 @@
 	.items {
 		display: flex;
 		gap: 0.5rem;
+		flex-wrap: wrap;
+		justify-content: center;
 	}
 
 	.item svg {
