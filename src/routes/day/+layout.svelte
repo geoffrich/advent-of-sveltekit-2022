@@ -2,7 +2,9 @@
 	import CodeBlock from '$lib/CodeBlock.svelte';
 	import type { LayoutData } from './$types';
 	import { days } from '$lib/days';
-	import { slide } from 'svelte/transition';
+	import { reducedMotion } from '$lib/reducedMotion';
+	import { slide, fade } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 
 	export let data: LayoutData;
 
@@ -10,8 +12,28 @@
 
 	$: showNext = day < days.length - 1;
 	$: showPrev = day > 0;
+	$: range = getPageRange(day);
+
+	function getPageRange(current: number) {
+		const items = Array(days.length)
+			.fill(0)
+			.map((_, idx) => idx);
+		const offset = 2;
+		const leftBoundary = Math.max(current - offset, 0);
+		const rightBoundary = current + offset + 1;
+		const left = items.slice(leftBoundary, current);
+		const right = items.slice(current, rightBoundary);
+		const diff = left.length - (right.length - 1);
+		if (diff < 0) {
+			right.push(...items.slice(rightBoundary, rightBoundary + Math.abs(diff)));
+		} else if (left.length > right.length - 1) {
+			left.unshift(...items.slice(leftBoundary - Math.abs(diff), leftBoundary));
+		}
+		return left.concat(right);
+	}
 </script>
 
+<!-- TODO: skip link, make this not in main -->
 <nav class="items" in:slide>
 	<svelte:element
 		this={showPrev ? 'a' : 'div'}
@@ -34,9 +56,16 @@
 			/>
 		</svg>
 	</svelte:element>
-	{#each days as _, idx}
+	{#each range as idx (idx)}
 		{@const isCurrent = idx === day}
-		<a class="item" class:current={isCurrent} href="/day/{idx}">{idx}</a>
+		<a
+			class="item"
+			animate:flip={{ duration: $reducedMotion ? 0 : 400 }}
+			transition:fade|local={{ duration: $reducedMotion ? 0 : 400 }}
+			class:current={isCurrent}
+			href="/day/{idx}"
+			style:--primary={idx % 2 === 0 ? 'var(--green-7)' : null}>{idx}</a
+		>
 	{/each}
 	<svelte:element
 		this={showNext ? 'a' : 'div'}
@@ -108,10 +137,6 @@
 		text-decoration: none;
 		transition: border 250ms;
 		font-weight: 700;
-	}
-
-	.item:nth-child(2n) {
-		--primary: var(--green-7);
 	}
 
 	.item.current {
