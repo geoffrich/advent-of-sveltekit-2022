@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types';
-import type { ProductsResult } from './types';
+import type { ProductsResult } from '$lib/types';
 
 export const load: PageLoad = async ({ url, fetch }) => {
 	const query = url.searchParams.get('q') ?? '';

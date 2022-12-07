@@ -4,5 +4,6 @@ export const days = [
 	'Christmas joke generator',
 	'Christmas countdown',
 	'Recursive Christmas tree',
-	'Gift label'
+	'Gift label',
+	'Gift price comparison'
 ];

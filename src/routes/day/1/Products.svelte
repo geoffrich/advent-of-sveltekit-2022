@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ProductsResult } from './types';
+	import type { ProductsResult } from '$lib/types';
 	import { fade } from 'svelte/transition';
 
 	export let data: ProductsResult;
