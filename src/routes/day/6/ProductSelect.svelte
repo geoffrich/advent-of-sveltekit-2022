@@ -32,5 +32,7 @@ https://stackoverflow.com/questions/4831848/firefox-ignores-option-selected-sele
 
 	select {
 		--flow-space: 0;
+		padding: 0.5rem;
+		border: 2px solid var(--gray-7);
 	}
 </style>
