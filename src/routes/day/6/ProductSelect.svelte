@@ -17,7 +17,7 @@
 <!-- Needed autocomplete off, otherwise Firefox would mess with the selected option 
 https://stackoverflow.com/questions/4831848/firefox-ignores-option-selected-selected -->
 <select {id} bind:value={selectedId} {name} autocomplete="off">
-	<option disabled value="">Select an item</option>
+	<option disabled value={-1} selected={selectedId === -1}>Select an item</option>
 
 	{#each products as p}
 		<!-- Need the actual selected attribute for SSR -->
