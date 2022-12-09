@@ -13,7 +13,7 @@
 </script>
 
 <!-- TIL: draggable is enumerated, so "true" and "false" -->
-<div draggable="true" on:dragstart on:click>
+<div draggable="true" on:dragstart>
 	{@html map[name]}
 </div>
 
