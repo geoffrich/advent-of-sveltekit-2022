@@ -2,6 +2,9 @@
 
 The [Advent of Vue](https://adventofvue.com/) challenges, but in [SvelteKit](https://kit.svelte.dev).
 
+- `npm run dev` - start SvelteKit dev server
+- `npm run typesafe-i18n` - run typesafe-i18n generator (transforms locale dictionaries for Day 8)
+
 ## Creating a project
 
 If you're seeing this, you've probably already done this step. Congrats!
