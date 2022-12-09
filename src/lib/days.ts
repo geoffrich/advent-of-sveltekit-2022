@@ -5,5 +5,6 @@ export const days = [
 	'Christmas countdown',
 	'Recursive Christmas tree',
 	'Gift label',
-	'Gift price comparison'
+	'Gift price comparison',
+	'Drag and drop presents'
 ];
