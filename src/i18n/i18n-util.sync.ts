@@ -5,10 +5,14 @@ import { initFormatters } from './formatters'
 import type { Locales, Translations } from './i18n-types'
 import { loadedFormatters, loadedLocales, locales } from './i18n-util'
 
+import de from './de'
 import en from './en'
+import ja_JP from './ja-JP'
 
 const localeTranslations = {
+	de,
 	en,
+	'ja-JP': ja_JP,
 }
 
 export const loadLocale = (locale: Locales): void => {
