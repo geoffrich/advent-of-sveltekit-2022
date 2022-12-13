@@ -6,6 +6,7 @@
 	import GermanFlag from '~icons/twemoji/flag-germany?raw';
 	import JapaneseFlag from '~icons/twemoji/flag-japan?raw';
 	import type { Locales } from '$i18n/i18n-types';
+	import { loadLocaleAsync } from '$i18n/i18n-util.async.js';
 
 	const flagMap = {
 		en: USFlag,
@@ -16,9 +17,11 @@
 	const locales: Locales[] = ['en', 'de', 'ja-JP'];
 	let localeIdx = 0;
 
-	function changeLocale() {
+	async function changeLocale() {
 		localeIdx = (localeIdx + 1) % locales.length;
-		setLocale(locales[localeIdx]);
+		const newLocale = locales[localeIdx];
+		await loadLocaleAsync(newLocale);
+		setLocale(newLocale);
 	}
 
 	const christmas = new Date('2022/12/25');
@@ -33,7 +36,7 @@
 		{$LL.happyHolidays()}
 		<Map />
 	</div>
-	<p>{$LL.christmasIsComing({ date: christmas, time: $LL.day(daysUntilChristmas) })}</p>
+	<p>{$LL.christmasIsComing({ date: christmas, time: $LL.day({ days: daysUntilChristmas }) })}</p>
 	<button on:click={changeLocale}>Change Locale</button>
 	<p>{@html flagMap[$locale]} {$LL.language()}</p>
 </section>

@@ -1,10 +1,10 @@
-import type { BaseTranslation } from '../i18n-types';
+import type { Translation } from '../i18n-types';
 
-const en: BaseTranslation = {
+const de: Translation = {
 	language: 'Deutsch',
 	happyHolidays: 'Schöne Ferien!',
-	christmasIsComing: '{ date|fullDay } ist in { time }',
-	day: '{{ ein Tag | ?? Tagen}}'
+	christmasIsComing: '{date|fullDay} ist in {time}',
+	day: '{{ days: ein Tag | ?? Tagen}}'
 };
 
-export default en;
+export default de;

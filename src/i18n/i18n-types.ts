@@ -51,7 +51,7 @@ export type TranslationFunctions = {
 	/**
 	 * {{one day|?? days}}
 	 */
-	day: (arg0: string | number | boolean) => LocalizedString
+	day: (arg: { days: string | number | boolean }) => LocalizedString
 }
 
 export type Formatters = {
