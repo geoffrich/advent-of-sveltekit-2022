@@ -1,10 +1,10 @@
-import type { BaseTranslation } from '../i18n-types';
+import type { Translation } from '../i18n-types';
 
-const en: BaseTranslation = {
+const ja_JP: Translation = {
 	language: '日本語',
 	happyHolidays: 'ハッピーホリデー！',
-	christmasIsComing: '{ date|fullDay }はあと{ time }',
-	day: '{0}日'
+	christmasIsComing: '{date|fullDay}はあと{time}',
+	day: '{days}日'
 };
 
-export default en;
+export default ja_JP;
