@@ -7,6 +7,7 @@
 	import JapaneseFlag from '~icons/twemoji/flag-japan?raw';
 	import type { Locales } from '$i18n/i18n-types';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async.js';
+	import WrapTranslation from './WrapTranslation.svelte';
 
 	const flagMap = {
 		en: USFlag,
@@ -26,8 +27,6 @@
 
 	const christmas = new Date('2022/12/25');
 	const daysUntilChristmas = 3; // TODO
-
-	// TODO: Style the time part of the christmasIsComing string. (Hint: use i18n-t and the slot syntax)
 </script>
 
 <section class="flex flex-col items-center leading-loose text-center">
@@ -36,7 +35,17 @@
 		{$LL.happyHolidays()}
 		<Map />
 	</div>
-	<p>{$LL.christmasIsComing({ date: christmas, time: $LL.day({ days: daysUntilChristmas }) })}</p>
+	<p>
+		<WrapTranslation
+			message={$LL.christmasIsComing({
+				date: christmas,
+				time: $LL.day({ days: daysUntilChristmas })
+			})}
+			let:infix
+		>
+			<span class="days">{infix}</span>
+		</WrapTranslation>
+	</p>
 	<button on:click={changeLocale}>Change Locale</button>
 	<p>{@html flagMap[$locale]} {$LL.language()}</p>
 </section>
@@ -73,5 +82,9 @@
     hover:ring-opacity-40
     hover:text-green-600;
         */
+	}
+
+	.days {
+		color: green;
 	}
 </style>

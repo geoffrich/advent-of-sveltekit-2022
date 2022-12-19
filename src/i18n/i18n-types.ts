@@ -24,7 +24,7 @@ type RootTranslation = {
 	 */
 	happyHolidays: string
 	/**
-	 * {​d​a​t​e​|​f​u​l​l​D​a​y​}​ ​i​s​ ​i​n​ ​{​t​i​m​e​}
+	 * {​d​a​t​e​|​f​u​l​l​D​a​y​}​ ​i​s​ ​i​n​ ​<​>​{​t​i​m​e​}​<​>
 	 * @param {unknown} date
 	 * @param {unknown} time
 	 */
@@ -45,7 +45,7 @@ export type TranslationFunctions = {
 	 */
 	happyHolidays: () => LocalizedString
 	/**
-	 * {date|fullDay} is in {time}
+	 * {date|fullDay} is in <>{time}<>
 	 */
 	christmasIsComing: (arg: { date: unknown, time: unknown }) => LocalizedString
 	/**
