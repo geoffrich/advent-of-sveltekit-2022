@@ -63,10 +63,10 @@
 		gap: 0.5rem;
 	}
 	.icon-button {
-		width: 32px;
-		height: 32px;
+		width: 50px;
+		height: 50px;
 		border-radius: var(--radius-round);
-		border: var(--border-size-1) solid transparent;
+		border: var(--border-size-1) solid black;
 		cursor: pointer;
 		transition: all 300ms;
 		background-color: transparent;
