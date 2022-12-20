@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LL, { setLocale, locale } from '$i18n/i18n-svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import Tree from '~icons/twemoji/christmas-tree';
 	import Map from '~icons/twemoji/world-map';
 	import CarbonLanguage from '~icons/carbon/language';
@@ -7,6 +7,7 @@
 	import GermanFlag from '~icons/twemoji/flag-germany?raw';
 	import JapaneseFlag from '~icons/twemoji/flag-japan?raw';
 	import WrapTranslation from './WrapTranslation.svelte';
+	import { submitReplaceState } from '$lib/util';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -39,7 +40,7 @@
 			<span class="days">{infix}</span>
 		</WrapTranslation>
 	</p>
-	<form class="lang-picker">
+	<form class="lang-picker" on:submit|preventDefault={submitReplaceState}>
 		<input type="hidden" name="locale" value={data.nextLocale} />
 		<button class="icon-button" aria-label="Change language"><CarbonLanguage /></button>
 		<p class="lang">{@html flagMap[$locale]} {$LL.language()}</p>

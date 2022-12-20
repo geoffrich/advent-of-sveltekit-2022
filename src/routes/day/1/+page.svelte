@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { goto } from '$app/navigation';
 	import { page, navigating } from '$app/stores';
 	import debounce from 'just-debounce-it';
 	import Spinner from '$lib/Spinner.svelte';
+	import { submitReplaceState } from '$lib/util';
 	import Products from './Products.svelte';
 	export let data: PageData;
 
@@ -18,23 +18,11 @@
 		}
 	}, 300);
 
-	// the SvelteKit router will handle this automatically, but we'll implement ourselves so we can use `replaceState`
-	// alternatively, don't handle the submit and accept the new history entries and focus reset
-	// https://kit.svelte.dev/docs/form-actions#get-vs-post
-	function handleSubmit(e: SubmitEvent) {
-		const form = e.target as HTMLFormElement;
-		const url = new URL(form.action);
-		// @ts-expect-error
-		const params = new URLSearchParams(new FormData(form));
-		url.search = params.toString();
-		goto(url, { replaceState: true, keepFocus: true });
-	}
-
 	$: isLoading = $navigating?.to?.url.pathname === $page.url.pathname;
 </script>
 
 <h1>Gift Search Bar</h1>
-<form bind:this={form} on:submit|preventDefault={handleSubmit}>
+<form bind:this={form} on:submit|preventDefault={submitReplaceState}>
 	<label for="q">Query</label>
 	<input
 		id="q"
