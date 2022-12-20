@@ -72,6 +72,8 @@
 		background-color: transparent;
 		display: grid;
 		place-items: center;
+		padding: 0;
+		color: black;
 	}
 
 	.icon-button:hover {
