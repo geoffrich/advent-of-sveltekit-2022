@@ -7,5 +7,5 @@ export const days = [
 	'Gift label',
 	'Gift price comparison',
 	'Drag and drop presents',
-	'i18n Happy Holidays (WIP)'
+	'i18n Happy Holidays'
 ];

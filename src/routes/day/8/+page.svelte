@@ -56,10 +56,6 @@
 		line-height: var(--font-lineheight-5);
 	}
 
-	section :global(svg) {
-		display: inline-block;
-	}
-
 	.header {
 		font-size: var(--font-size-5);
 		display: flex;
