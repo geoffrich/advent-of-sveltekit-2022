@@ -6,9 +6,10 @@
 	import USFlag from '~icons/twemoji/flag-united-states?raw';
 	import GermanFlag from '~icons/twemoji/flag-germany?raw';
 	import JapaneseFlag from '~icons/twemoji/flag-japan?raw';
-	import type { Locales } from '$i18n/i18n-types';
-	import { loadLocaleAsync } from '$i18n/i18n-util.async.js';
 	import WrapTranslation from './WrapTranslation.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	const flagMap = {
 		en: USFlag,
@@ -16,21 +17,12 @@
 		'ja-JP': JapaneseFlag
 	};
 
-	const locales: Locales[] = ['en', 'de', 'ja-JP'];
-	let localeIdx = 0;
-
-	async function changeLocale() {
-		localeIdx = (localeIdx + 1) % locales.length;
-		const newLocale = locales[localeIdx];
-		await loadLocaleAsync(newLocale);
-		setLocale(newLocale);
-	}
-
-	const christmas = new Date('2022/12/25');
-	const daysUntilChristmas = 3; // TODO
+	const daysUntilChristmas = Math.floor(
+		(data.target.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+	);
 </script>
 
-<section class="flex flex-col items-center leading-loose text-center">
+<section>
 	<div class="header">
 		<Tree />
 		{$LL.happyHolidays()}
@@ -39,7 +31,7 @@
 	<p>
 		<WrapTranslation
 			message={$LL.christmasIsComing({
-				date: christmas,
+				date: data.target,
 				time: $LL.day({ days: daysUntilChristmas })
 			})}
 			let:infix
@@ -47,10 +39,11 @@
 			<span class="days">{infix}</span>
 		</WrapTranslation>
 	</p>
-	<div class="lang-picker">
-		<button class="icon-button" on:click={changeLocale}><CarbonLanguage /></button>
+	<form class="lang-picker">
+		<input type="hidden" name="locale" value={data.nextLocale} />
+		<button class="icon-button" aria-label="Change language"><CarbonLanguage /></button>
 		<p class="lang">{@html flagMap[$locale]} {$LL.language()}</p>
-	</div>
+	</form>
 </section>
 
 <style>
