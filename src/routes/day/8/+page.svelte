@@ -63,13 +63,15 @@
 		gap: 0.5rem;
 	}
 	.icon-button {
-		width: 50px;
-		height: 50px;
+		width: 40px;
+		height: 40px;
 		border-radius: var(--radius-round);
 		border: var(--border-size-1) solid black;
 		cursor: pointer;
 		transition: all 300ms;
 		background-color: transparent;
+		display: grid;
+		place-items: center;
 	}
 
 	.icon-button:hover {
