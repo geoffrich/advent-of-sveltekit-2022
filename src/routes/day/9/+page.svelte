@@ -9,11 +9,11 @@
 	// not sure if there's a way to conditionally pass a form input
 	$: sorted = $page.url.searchParams.get('sort') === 'true';
 
-	$: sortedPresents = sorted
-		? [...presents].sort((a, b) => {
-				return a.dimensions.width * a.dimensions.height - b.dimensions.width * b.dimensions.height;
-		  })
-		: presents;
+	const sortedPresents = [...presents].sort((a, b) => {
+		return a.dimensions.width * a.dimensions.height - b.dimensions.width * b.dimensions.height;
+	});
+
+	$: displayPresents = sorted ? sortedPresents : presents;
 </script>
 
 <form class="container" on:submit={submitReplaceState}>
@@ -21,7 +21,7 @@
 		<img src={tree} alt="Christmas tree" />
 	</div>
 	<div class="presents">
-		{#each sortedPresents as present (present.id)}
+		{#each displayPresents as present (present.id)}
 			<img animate:flip src={present.src} alt="Present {present.id}" />
 		{/each}
 	</div>
