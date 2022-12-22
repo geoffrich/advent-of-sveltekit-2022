@@ -5,7 +5,7 @@ const globs = import.meta.glob(`./**/*.svelte`, { as: 'raw' });
 
 export const load: LayoutLoad = async ({ url, route }) => {
 	const segments = route.id?.split('/');
-	const day = segments?.[segments.length - 1];
+	const day = segments?.[2];
 
 	let code: { filename: string; source: string }[] = [];
 	const modules = Object.entries(globs)

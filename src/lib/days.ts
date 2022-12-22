@@ -8,5 +8,6 @@ export const days = [
 	'Gift price comparison',
 	'Drag and drop presents',
 	'i18n Happy Holidays',
-	'Sort presents'
+	'Sort presents',
+	'Secret santa clues'
 ];
