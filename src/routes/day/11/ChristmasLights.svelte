@@ -1,4 +1,6 @@
 <script>
+	export let random = Math.random;
+
 	// Not important for the challenge, but some math fun:
 	// Math.random() gives us in the range [0...1] so we multiply
 	// so we can get a range [0...AMPLIFY].
@@ -6,12 +8,12 @@
 	// subtract (AMPLIFY / 2) so that we're centered over 0
 	// and our range is now [(-AMPLIFY / 2)...(AMPLIFY / 2)]
 	const AMPLIFY = 15;
-	const offsetY = Math.random() * AMPLIFY - AMPLIFY / 2;
-	const offsetX = Math.random() * AMPLIFY - AMPLIFY / 2;
+	const offsetY = random() * AMPLIFY - AMPLIFY / 2;
+	const offsetX = random() * AMPLIFY - AMPLIFY / 2;
 	// Should be the same as the length of the animation so that
 	// it's evenly distributed
 	const MAX_DELAY = 2;
-	const twinkleDelay = Math.random() * MAX_DELAY;
+	const twinkleDelay = random() * MAX_DELAY;
 </script>
 
 <div

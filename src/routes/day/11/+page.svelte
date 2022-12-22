@@ -1,13 +1,16 @@
-<script>
+<script lang="ts">
 	import ChristmasTree from './ChristmasTree.svelte';
 	import ChristmasLights from './ChristmasLights.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 </script>
 
 <h1>Christmas tree lights</h1>
 <div>
 	<ChristmasTree size={7}>
-		<ChristmasLights />
-		<ChristmasLights />
+		<ChristmasLights random={data.rng} />
+		<ChristmasLights random={data.rng} />
 	</ChristmasTree>
 </div>
 
