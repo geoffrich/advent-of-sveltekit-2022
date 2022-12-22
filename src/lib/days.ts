@@ -9,5 +9,6 @@ export const days = [
 	'Drag and drop presents',
 	'i18n Happy Holidays',
 	'Sort presents',
-	'Secret santa clues'
+	'Secret santa clues',
+	'Christmas tree lights'
 ];
