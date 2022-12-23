@@ -1,10 +1,6 @@
 <script lang="ts">
 	import './app.css';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import { update } from '$lib/hydrated';
-
-	onMount(update);
 
 	$: day = $page.data.day;
 </script>
