@@ -5,8 +5,9 @@
 	import { fade } from 'svelte/transition';
 
 	export let source: string;
+	export let lang: string;
 
-	$: highlighted = Prism.highlight(source, Prism.languages.svelte, 'svelte');
+	$: highlighted = Prism.highlight(source, Prism.languages[lang === 'ts' ? 'js' : lang], lang);
 </script>
 
 <pre in:fade><code>{@html highlighted}</code></pre>

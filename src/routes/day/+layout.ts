@@ -1,7 +1,7 @@
 import type { LayoutLoad } from './$types';
 
 // https://vitejs.dev/guide/features.html#glob-import
-const globs = import.meta.glob(`./**/*.svelte`, { as: 'raw' });
+const globs = import.meta.glob(`./**/*.{svelte,js,ts}`, { as: 'raw' });
 
 export const load: LayoutLoad = async ({ url, route }) => {
 	const segments = route.id?.split('/');
@@ -9,7 +9,7 @@ export const load: LayoutLoad = async ({ url, route }) => {
 
 	let code: { filename: string; source: string }[] = [];
 	const modules = Object.entries(globs)
-		.filter(([k, v]) => k.startsWith(`./${day}`))
+		.filter(([k, v]) => k.startsWith(`./${day}/`))
 		.map(([k, v]) =>
 			v().then((result) => {
 				const segments = k.split('/');

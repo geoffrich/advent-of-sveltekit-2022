@@ -93,6 +93,7 @@
 <slot />
 <h2>Source code</h2>
 {#each data.code as { filename, source }}
+	{@const splitFilename = filename.split('.')}
 	<h3>
 		<a
 			class="codelink"
@@ -100,7 +101,7 @@
 			><code>{filename}</code></a
 		>
 	</h3>
-	<CodeBlock {source} />
+	<CodeBlock {source} lang={splitFilename[splitFilename.length - 1]} />
 {/each}
 
 <style>
