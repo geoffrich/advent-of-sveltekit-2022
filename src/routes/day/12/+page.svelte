@@ -20,6 +20,7 @@
 		min="2"
 		max="30"
 		name="presents"
+		value={presents.length}
 		on:input={() => form.requestSubmit()}
 	/>
 	<input type="hidden" name="step" value={step} />
