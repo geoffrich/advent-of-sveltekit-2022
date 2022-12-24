@@ -1,50 +1,35 @@
 <script lang="ts">
-	let numPresents = 5;
-	let step = 1;
-	let presents: boolean[] = [];
-	// reset the game state when numPresents changes
-	// because the solution changes
-	$: resetGameState(numPresents);
+	import { submitReplaceState } from '$lib/util';
+	import type { PageData } from './$types';
 
-	// needed to take an explicit dependency on presents here
-	// otherwise, it wouldn't re-run when resetting if step didn't change
-	$: presents = setEliminatedPresents(step, presents);
+	export let data: PageData;
 
-	$: finalStep = numPresents - 1;
+	$: ({ presents, step } = data);
 
-	function setEliminatedPresents(step: number, oldPresents: boolean[]) {
-		if (step > finalStep) return oldPresents;
-		// there's probably a more efficient way that doesn't regenerate the entire array on every step
-		// ¯\_(ツ)_/¯
-		let presents = oldPresents.map(() => false);
-		let pIdx = 1;
-		for (let i = 0; i < step; i++) {
-			let eliminated = pIdx % presents.length;
-			while (presents[eliminated] && eliminated < presents.length) {
-				eliminated = (eliminated + 1) % presents.length;
-			}
-			presents[eliminated] = true;
-			pIdx += 2;
-		}
-		return presents;
-	}
+	$: finalStep = presents.length - 1;
 
-	function resetGameState(numPresents: number) {
-		console.log('reset');
-		presents = Array(numPresents).fill(false);
-		step = 1;
-	}
+	let form: HTMLFormElement;
 </script>
 
 <h1>Find Joseph's Gift</h1>
-<label for="num">Pick a number from 2 to 30:</label>
-<input id="num" type="range" min="2" max="30" bind:value={numPresents} />
-<div class="controls">
-	<button disabled={step === 1} on:click={() => (step = 1)}>Start</button>
-	<button disabled={step === 1} on:click={() => step--}>Prev</button>
-	<button disabled={step >= finalStep} on:click={() => step++}>Next</button>
-	<button disabled={step >= finalStep} on:click={() => (step = finalStep)}>End</button>
-</div>
+<form on:submit={submitReplaceState} bind:this={form}>
+	<label for="num">Pick a number from 2 to 30:</label>
+	<input
+		id="num"
+		type="range"
+		min="2"
+		max="30"
+		name="presents"
+		on:input={() => form.requestSubmit()}
+	/>
+
+	<div class="controls">
+		<button disabled={step === 1} name="step" value="1">Start</button>
+		<button disabled={step === 1} name="step" value={step - 1}>Prev</button>
+		<button disabled={step >= finalStep} name="step" value={step + 1}>Next</button>
+		<button disabled={step >= finalStep} name="step" value={finalStep}>End</button>
+	</div>
+</form>
 
 <p>Step: {step}</p>
 
@@ -73,5 +58,14 @@
 	.eliminated {
 		border-style: dashed;
 		border-width: 3px;
+	}
+
+	form {
+		display: contents;
+	}
+
+	.controls {
+		display: flex;
+		gap: 0.5rem;
 	}
 </style>
