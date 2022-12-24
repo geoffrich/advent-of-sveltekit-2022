@@ -22,12 +22,13 @@
 		name="presents"
 		on:input={() => form.requestSubmit()}
 	/>
+	<input type="hidden" name="step" value={step} />
 
 	<div class="controls">
-		<button disabled={step === 1} name="step" value="1">Start</button>
-		<button disabled={step === 1} name="step" value={step - 1}>Prev</button>
-		<button disabled={step >= finalStep} name="step" value={step + 1}>Next</button>
-		<button disabled={step >= finalStep} name="step" value={finalStep}>End</button>
+		<button disabled={step === 1} name="nstep" value="1">Start</button>
+		<button disabled={step === 1} name="nstep" value={step - 1}>Prev</button>
+		<button disabled={step >= finalStep} name="nstep" value={step + 1}>Next</button>
+		<button disabled={step >= finalStep} name="nstep" value={finalStep}>End</button>
 	</div>
 </form>
 
@@ -35,7 +36,13 @@
 
 <div class="presents">
 	{#each presents as eliminated, idx}
-		<div class="present" class:eliminated>{idx + 1}</div>
+		<div class="present" class:eliminated class:chosen={step >= finalStep && !eliminated}>
+			{#if step >= finalStep && !eliminated}
+				🎁
+			{:else}
+				{idx + 1}
+			{/if}
+		</div>
 	{/each}
 </div>
 
@@ -53,11 +60,18 @@
 		display: grid;
 		place-items: center;
 		aspect-ratio: 1/1;
+		transition: border 0.4s ease-out;
 	}
 
 	.eliminated {
 		border-style: dashed;
 		border-width: 3px;
+	}
+
+	.chosen {
+		border-width: 7px;
+		border-color: red;
+		font-size: 1.5rem;
 	}
 
 	form {

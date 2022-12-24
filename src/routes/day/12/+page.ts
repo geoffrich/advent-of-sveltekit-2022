@@ -1,10 +1,10 @@
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ url }) => {
-	const stepParam = url.searchParams.get('step') ?? '1';
+	const stepParam = url.searchParams.get('nstep') ?? url.searchParams.get('step') ?? '1';
 	const numPresentsParam = url.searchParams.get('presents') ?? '22';
-	const step = +stepParam;
 	const numPresents = +numPresentsParam;
+	const step = Math.min(+stepParam, numPresents - 1);
 	let presents: boolean[] = Array(numPresents).fill(false);
 
 	// there's probably a more efficient way
