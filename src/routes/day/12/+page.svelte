@@ -62,6 +62,7 @@
 		place-items: center;
 		aspect-ratio: 1/1;
 		transition: border 0.4s ease-out;
+		height: 100%;
 	}
 
 	.eliminated {
