@@ -6,7 +6,7 @@
 
 	$: ({ presents, step } = data);
 
-	$: finalStep = presents.length - 1;
+	$: finalStep = presents.length;
 
 	let form: HTMLFormElement;
 </script>
@@ -61,7 +61,6 @@
 		display: grid;
 		place-items: center;
 		aspect-ratio: 1/1;
-		transition: border 0.4s ease-out;
 		height: 100%;
 	}
 
