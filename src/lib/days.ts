@@ -12,5 +12,6 @@ export const days = [
 	'Secret santa clues',
 	'Christmas tree lights',
 	"Find Joseph's gift",
-	'Christmas tree ornaments'
+	'Christmas tree ornaments',
+	'Secret santa list generator'
 ];

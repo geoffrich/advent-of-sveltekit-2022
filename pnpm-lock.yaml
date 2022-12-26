@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@faker-js/faker': ^7.6.0
   '@formkit/auto-animate': 1.0.0-beta.5
   '@iconify-json/carbon': ^1.1.11
   '@iconify-json/twemoji': ^1.1.7
@@ -32,6 +33,7 @@ dependencies:
   typesafe-i18n: 5.17.1_typescript@4.8.4
 
 devDependencies:
+  '@faker-js/faker': 7.6.0
   '@formkit/auto-animate': 1.0.0-beta.5
   '@iconify-json/carbon': 1.1.11
   '@iconify-json/twemoji': 1.1.7
@@ -272,6 +274,11 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@faker-js/faker/7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
+    dev: true
 
   /@formkit/auto-animate/1.0.0-beta.5:
     resolution: {integrity: sha512-WoSwyhAZPOe6RB/IgicOtCHtrWwEpfKIZ/H/nxpKfnZL9CB6hhhBGU5bCdMRw7YpAUF2CDlQa+WWh+gCqz5lDg==}

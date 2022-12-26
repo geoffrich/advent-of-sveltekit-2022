@@ -13,6 +13,7 @@
 		"typesafe-i18n": "typesafe-i18n"
 	},
 	"devDependencies": {
+		"@faker-js/faker": "^7.6.0",
 		"@formkit/auto-animate": "1.0.0-beta.5",
 		"@iconify-json/carbon": "^1.1.11",
 		"@iconify-json/twemoji": "^1.1.7",
