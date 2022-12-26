@@ -1,5 +1,7 @@
 <script lang="ts">
-	export let random = Math.random;
+	import type { PRNG } from 'seedrandom';
+	import { getContext } from 'svelte';
+	let random = getContext<PRNG>('rng');
 
 	const AMPLIFY = 20;
 	const offsetY = 16 + (random() * AMPLIFY - AMPLIFY / 2);

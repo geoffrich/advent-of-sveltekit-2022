@@ -1,8 +1,14 @@
 <script lang="ts">
 	import './app.css';
+	import { setContext } from 'svelte';
 	import { page } from '$app/stores';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	$: day = $page.data.day;
+
+	setContext('rng', data.rng);
 </script>
 
 <svelte:head>

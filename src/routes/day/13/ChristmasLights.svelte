@@ -1,5 +1,7 @@
-<script>
-	export let random = Math.random;
+<script lang="ts">
+	import type { PRNG } from 'seedrandom';
+	import { getContext } from 'svelte';
+	let random = getContext<PRNG>('rng');
 
 	// Not important for the challenge, but some math fun:
 	// Math.random() gives us in the range [0...1] so we multiply

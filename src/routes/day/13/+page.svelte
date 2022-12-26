@@ -31,21 +31,21 @@
 		{#if alternate}
 			<ChristmasTree size={7}>
 				<svelte:fragment slot="lights">
-					<ChristmasLights random={data.rng} />
-					<ChristmasLights random={data.rng} />
+					<ChristmasLights />
+					<ChristmasLights />
 				</svelte:fragment>
 
-				<ChristmasOrnament random={data.rng} slot="even" color="green" />
-				<ChristmasOrnament random={data.rng} slot="odd" color="red" />
+				<ChristmasOrnament slot="even" color="green" />
+				<ChristmasOrnament slot="odd" color="red" />
 			</ChristmasTree>
 		{:else}
 			<ChristmasTree size={7}>
 				<svelte:fragment slot="lights">
-					<ChristmasLights random={data.rng} />
-					<ChristmasLights random={data.rng} />
+					<ChristmasLights />
+					<ChristmasLights />
 				</svelte:fragment>
 
-				<ChristmasOrnament random={data.rng} slot="ornaments" />
+				<ChristmasOrnament slot="ornaments" />
 			</ChristmasTree>
 		{/if}
 	</div>
