@@ -11,5 +11,6 @@ export const days = [
 	'Sort presents',
 	'Secret santa clues',
 	'Christmas tree lights',
-	"Find Joseph's gift"
+	"Find Joseph's gift",
+	'Christmas tree ornaments'
 ];

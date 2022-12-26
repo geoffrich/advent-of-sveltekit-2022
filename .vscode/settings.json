@@ -12,5 +12,6 @@
     // add support for autocomplete in JS or JS like files
     "cssvar.extensions": [
       "css", "jsx", "tsx", "svelte"
-    ]
+    ],
+    "workbench.editor.labelFormat": "short"
   }
