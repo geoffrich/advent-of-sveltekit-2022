@@ -29,3 +29,11 @@ export const Names = z.array(
 export function hasDuplicateNames(names: z.infer<typeof Names>) {
 	return new Set(names.map((n) => n.name)).size !== names.length;
 }
+
+export const getDefaultNames = () => [
+	{ name: 'Kevin McCallister', email: 'kevin@homealone.com', id: 1 },
+	{ name: 'John McClane', email: 'john@yippeekiyay.com', id: 2 },
+	{ name: 'Clark Griswold', email: 'clark@lastfamilyman.com', id: 3 },
+	{ name: 'The Grinch', email: 'grinch@mountcrumpit.com', id: 4 },
+	{ name: 'Marvin Merchants', email: 'marvin@stickybandits.com', id: 5 }
+];

@@ -1,16 +1,12 @@
 import type { PageServerLoad } from './$types';
-import { getNamesFromCookie, Names, Name } from '../util';
+import { getNamesFromCookie, Names, Name, getDefaultNames } from '../util';
 import type { z } from 'zod';
-import { redirect } from '@sveltejs/kit';
 import shuffle from 'just-shuffle';
 
 const DATA_KEY = 'app:match';
 
 export const load: PageServerLoad = async ({ cookies, depends }) => {
-	const names = getNamesFromCookie(cookies);
-	if (!names) {
-		throw redirect(302, '/day/14');
-	}
+	const names = getNamesFromCookie(cookies) ?? getDefaultNames();
 
 	// allow invalidating only this load function
 	depends(DATA_KEY);

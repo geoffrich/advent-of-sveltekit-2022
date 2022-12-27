@@ -2,14 +2,10 @@ import { fail, redirect, type Cookies } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { z, ZodError } from 'zod';
 import { faker } from '@faker-js/faker';
-import { getNamesFromCookie, hasDuplicateNames, Name, Names } from './util';
+import { getNamesFromCookie, hasDuplicateNames, Name, Names, getDefaultNames } from './util';
 
 export const load: PageServerLoad = ({ cookies }) => {
-	let names = getNamesFromCookie(cookies);
-	if (!names) {
-		setNames(cookies, DEFAULT_NAMES);
-		names = DEFAULT_NAMES;
-	}
+	let names = getNamesFromCookie(cookies) ?? getDefaultNames();
 
 	return {
 		names,
@@ -24,14 +20,16 @@ export const actions: Actions = {
 	add: async ({ request, cookies }) => {
 		// uncomment to test race conditions
 		// await new Promise((res) => setTimeout(res, 500));
-		let names = getNamesFromCookie(cookies) ?? DEFAULT_NAMES;
+		let names = getNamesFromCookie(cookies) ?? getDefaultNames();
+		const nextId = Math.max(...names.map((n) => n.id)) + 1;
 
 		const data = await request.formData();
 		const name = data.get('name');
 		const email = data.get('email');
 		try {
 			const parsed = Name.parse({ name, email });
-			names.push({ ...parsed, id: id++ });
+			// add at front to get visible feedback
+			names.unshift({ ...parsed, id: nextId });
 		} catch (e) {
 			if (e instanceof ZodError) {
 				return fail(400, {
@@ -53,9 +51,10 @@ export const actions: Actions = {
 		throw redirect(302, '/day/14');
 	},
 	delete: async ({ request, cookies }) => {
-		// TODO: try with delay
-		// optimistic UI
-		let names = getNamesFromCookie(cookies) ?? DEFAULT_NAMES;
+		let names = getNamesFromCookie(cookies);
+		if (!names) {
+			return fail(500, { error: 'No names to delete' });
+		}
 
 		const data = await request.formData();
 		const id = z.coerce.number().parse(data.get('id'));
@@ -70,16 +69,6 @@ export const actions: Actions = {
 		throw redirect(302, '/day/14');
 	}
 };
-
-let id = 6;
-
-const DEFAULT_NAMES = [
-	{ name: 'Kevin McCallister', email: 'kevin@homealone.com', id: 1 },
-	{ name: 'John McClane', email: 'john@yippeekiyay.com', id: 2 },
-	{ name: 'Clark Griswold', email: 'clark@lastfamilyman.com', id: 3 },
-	{ name: 'The Grinch', email: 'grinch@mountcrumpit.com', id: 4 },
-	{ name: 'Marvin Merchants', email: 'marvin@stickybandits.com', id: 5 }
-];
 
 function setNames(cookies: Cookies, names: z.infer<typeof Names>) {
 	cookies.set('names', JSON.stringify(names));

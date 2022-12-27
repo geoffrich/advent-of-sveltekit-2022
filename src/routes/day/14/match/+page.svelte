@@ -22,3 +22,18 @@
 	<button on:click={() => invalidate(data.key)}>Shuffle</button>
 </form>
 <a href="/day/14">Go back</a>
+
+<style>
+	ul {
+		width: 100%;
+		list-style: none;
+		margin: 0;
+		padding: 1rem;
+		border: 2px solid var(--gray-6);
+		border-radius: var(--radius-3);
+	}
+
+	ul > * + * {
+		margin-top: 0.5rem;
+	}
+</style>
