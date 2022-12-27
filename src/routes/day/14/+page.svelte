@@ -7,8 +7,8 @@
 	export let data: PageData;
 	export let form: ActionData;
 
-	let name = '';
-	let email = '';
+	let name = form?.name ?? '';
+	let email = form?.email ?? '';
 
 	function prefill() {
 		name = data.fake.name;

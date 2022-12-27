@@ -13,7 +13,7 @@ export const load: LayoutLoad = async ({ url, route }) => {
 		.map(([k, v]) =>
 			v().then((result) => {
 				const segments = k.split('/');
-				return { filename: segments[segments.length - 1], source: result };
+				return { filename: segments.slice(2).join('/'), source: result };
 			})
 		);
 	code = await Promise.all(modules);

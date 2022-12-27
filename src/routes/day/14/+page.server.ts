@@ -33,17 +33,23 @@ export const actions: Actions = {
 		} catch (e) {
 			if (e instanceof ZodError) {
 				return fail(400, {
-					error: e.errors[0].message
+					error: e.errors[0].message,
+					name,
+					email
 				});
 			}
 			return fail(500, {
-				error: 'Something went wrong'
+				error: 'Something went wrong',
+				name,
+				email
 			});
 		}
 
 		if (hasDuplicateNames(names)) {
 			return fail(400, {
-				error: 'Name already exists'
+				error: 'Name already exists',
+				name,
+				email
 			});
 		}
 
@@ -53,7 +59,9 @@ export const actions: Actions = {
 	delete: async ({ request, cookies }) => {
 		let names = getNamesFromCookie(cookies);
 		if (!names) {
-			return fail(500, { error: 'No names to delete' });
+			// need to return name/email to prevent type error
+			// not sure if there's a more elegant way
+			return fail(500, { error: 'No names to delete', name: '', email: '' });
 		}
 
 		const data = await request.formData();
