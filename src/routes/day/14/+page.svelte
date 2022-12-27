@@ -29,19 +29,17 @@
 	{/if}
 	<div>
 		<label for="name">Name</label>
-		<input id="name" name="name" type="text" bind:value={name} required />
+		<input id="name" name="name" type="text" bind:value={name} />
 	</div>
 
 	<div>
 		<label for="email">Email</label>
-		<input id="email" name="email" type="email" bind:value={email} required />
+		<input id="email" name="email" type="email" bind:value={email} />
 	</div>
 
 	<button type="button" on:click={prefill}>Pre-fill</button>
 	<button>Add to list</button>
-</form>
-<form use:enhance action="?/reset" method="post">
-	<button>Reset list</button>
+	<button formaction="?/reset" formnovalidate>Reset list</button>
 </form>
 
 <a href="/day/14/match">Generate List</a>

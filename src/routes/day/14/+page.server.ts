@@ -1,6 +1,6 @@
 import { fail, redirect, type Cookies } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 import { faker } from '@faker-js/faker';
 import { getNamesFromCookie, hasDuplicateNames, Name, Names } from './util';
 
@@ -29,9 +29,19 @@ export const actions: Actions = {
 		const data = await request.formData();
 		const name = data.get('name');
 		const email = data.get('email');
-		// TODO: error handling
-		const parsed = Name.parse({ name, email });
-		names.push({ ...parsed, id: id++ });
+		try {
+			const parsed = Name.parse({ name, email });
+			names.push({ ...parsed, id: id++ });
+		} catch (e) {
+			if (e instanceof ZodError) {
+				return fail(400, {
+					error: e.errors[0].message
+				});
+			}
+			return fail(500, {
+				error: 'Something went wrong'
+			});
+		}
 
 		if (hasDuplicateNames(names)) {
 			return fail(400, {

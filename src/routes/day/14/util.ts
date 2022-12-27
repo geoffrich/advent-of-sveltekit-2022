@@ -16,7 +16,7 @@ export function getNamesFromCookie(cookies: Cookies) {
 }
 
 export const Name = z.object({
-	name: z.string(),
+	name: z.string().min(1),
 	email: z.string().email()
 });
 
