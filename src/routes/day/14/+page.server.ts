@@ -1,7 +1,8 @@
-import type { Cookies } from '@sveltejs/kit';
+import { fail, redirect, type Cookies } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { z } from 'zod';
 import { faker } from '@faker-js/faker';
+import { getNamesFromCookie, hasDuplicateNames, Name, Names } from './util';
 
 export const load: PageServerLoad = ({ cookies }) => {
 	let names = getNamesFromCookie(cookies);
@@ -31,7 +32,15 @@ export const actions: Actions = {
 		// TODO: error handling
 		const parsed = Name.parse({ name, email });
 		names.push({ ...parsed, id: id++ });
+
+		if (hasDuplicateNames(names)) {
+			return fail(400, {
+				error: 'Name already exists'
+			});
+		}
+
 		setNames(cookies, names);
+		throw redirect(302, '/day/14');
 	},
 	delete: async ({ request, cookies }) => {
 		// TODO: try with delay
@@ -44,24 +53,15 @@ export const actions: Actions = {
 		const toRemove = names.findIndex((n) => n.id === id);
 		names.splice(toRemove, 1);
 		setNames(cookies, names);
+		throw redirect(302, '/day/14');
 	},
-	reset: async ({ request, cookies }) => {
+	reset: async ({ cookies }) => {
 		cookies.delete('names');
+		throw redirect(302, '/day/14');
 	}
 };
 
 let id = 6;
-
-const Name = z.object({
-	name: z.string(),
-	email: z.string().email()
-});
-
-const Names = z.array(
-	Name.extend({
-		id: z.number()
-	})
-);
 
 const DEFAULT_NAMES = [
 	{ name: 'Kevin McCallister', email: 'kevin@homealone.com', id: 1 },
@@ -70,20 +70,6 @@ const DEFAULT_NAMES = [
 	{ name: 'The Grinch', email: 'grinch@mountcrumpit.com', id: 4 },
 	{ name: 'Marvin Merchants', email: 'marvin@stickybandits.com', id: 5 }
 ];
-
-function getNamesFromCookie(cookies: Cookies) {
-	const names = cookies.get('names');
-	if (names) {
-		try {
-			const parsed = Names.parse(JSON.parse(names));
-			return parsed;
-		} catch (e) {
-			console.error(e);
-		}
-	}
-
-	return undefined;
-}
 
 function setNames(cookies: Cookies, names: z.infer<typeof Names>) {
 	cookies.set('names', JSON.stringify(names));

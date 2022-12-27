@@ -1,10 +1,19 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 	import { enhance } from '$app/forms';
 	import { flip } from 'svelte/animate';
 	import { slide } from 'svelte/transition';
 
 	export let data: PageData;
+	export let form: ActionData;
+
+	let name = '';
+	let email = '';
+
+	function prefill() {
+		name = data.fake.name;
+		email = data.fake.email;
+	}
 </script>
 
 <h1>Secret Santa List Generator</h1>
@@ -15,26 +24,32 @@
 </p>
 
 <form use:enhance action="?/add" method="post">
+	{#if form?.error}
+		<p>{form?.error}</p>
+	{/if}
 	<div>
 		<label for="name">Name</label>
-		<input id="name" name="name" type="text" value={data.fake.name} required />
+		<input id="name" name="name" type="text" bind:value={name} required />
 	</div>
 
 	<div>
 		<label for="email">Email</label>
-		<input id="email" name="email" type="email" value={data.fake.email} required />
+		<input id="email" name="email" type="email" bind:value={email} required />
 	</div>
 
+	<button type="button" on:click={prefill}>Pre-fill</button>
 	<button>Add to list</button>
 </form>
 <form use:enhance action="?/reset" method="post">
 	<button>Reset list</button>
 </form>
 
+<a href="/day/14/match">Generate List</a>
+
 <form use:enhance action="?/delete" method="post">
 	<ul>
 		{#each data.names as { name, email, id } (id)}
-			<li animate:flip transition:slide>
+			<li animate:flip transition:slide|local>
 				{name}
 				{email} <button name="id" value={id}>Delete</button>
 			</li>

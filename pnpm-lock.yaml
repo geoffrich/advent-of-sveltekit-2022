@@ -13,6 +13,7 @@ specifiers:
   date-fns: ^2.29.3
   date-fns-tz: ^1.3.7
   just-debounce-it: ^3.1.1
+  just-shuffle: ^4.2.0
   open-props: ^1.4.24
   prettier: ^2.6.2
   prettier-plugin-svelte: ^2.7.0
@@ -45,6 +46,7 @@ devDependencies:
   date-fns: 2.29.3
   date-fns-tz: 1.3.7_date-fns@2.29.3
   just-debounce-it: 3.1.1
+  just-shuffle: 4.2.0
   open-props: 1.4.24
   prettier: 2.7.1
   prettier-plugin-svelte: 2.8.0_uhw2lhpgcwcu2blwnxkrwkimce
@@ -777,6 +779,10 @@ packages:
 
   /just-debounce-it/3.1.1:
     resolution: {integrity: sha512-oPsuRyWp99LJaQ4KXC3A42tQNqkRTcPy0A8BCkRZ5cPCgsx81upB2KUrmHZvDUNhnCDKe7MshfTuWFQB9iXwDg==}
+    dev: true
+
+  /just-shuffle/4.2.0:
+    resolution: {integrity: sha512-/dDmNseAWLf3XkFY9xf3/BdQoiy27LNUy/7uG4zdSAX526nIHMYPYeJ4pN4lT1/pgNEX8XCXPtUB6gJqTpBEng==}
     dev: true
 
   /kleur/4.1.5:
