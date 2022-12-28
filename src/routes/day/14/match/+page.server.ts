@@ -1,12 +1,12 @@
 import type { PageServerLoad } from './$types';
-import { getNamesFromCookie, Names, Name, getDefaultNames } from '../util';
+import { getNamesFromCookie, Names, Name } from '../util';
 import type { z } from 'zod';
 import shuffle from 'just-shuffle';
 
 const DATA_KEY = 'app:match';
 
 export const load: PageServerLoad = async ({ cookies, depends }) => {
-	const names = getNamesFromCookie(cookies) ?? getDefaultNames();
+	const names = getNamesFromCookie(cookies);
 
 	// allow invalidating only this load function
 	depends(DATA_KEY);

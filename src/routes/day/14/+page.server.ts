@@ -2,10 +2,10 @@ import { fail, redirect, type Cookies } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { z, ZodError } from 'zod';
 import { faker } from '@faker-js/faker';
-import { getNamesFromCookie, hasDuplicateNames, Name, Names, getDefaultNames } from './util';
+import { getNamesFromCookie, hasDuplicateNames, Name, Names } from './util';
 
 export const load: PageServerLoad = ({ cookies }) => {
-	let names = getNamesFromCookie(cookies) ?? getDefaultNames();
+	let names = getNamesFromCookie(cookies);
 
 	return {
 		names,
@@ -20,7 +20,7 @@ export const actions: Actions = {
 	add: async ({ request, cookies }) => {
 		// uncomment to test race conditions
 		// await new Promise((res) => setTimeout(res, 500));
-		let names = getNamesFromCookie(cookies) ?? getDefaultNames();
+		let names = getNamesFromCookie(cookies);
 		const nextId = Math.max(...names.map((n) => n.id)) + 1;
 
 		const data = await request.formData();
@@ -31,15 +31,8 @@ export const actions: Actions = {
 			// add at front to get visible feedback
 			names.unshift({ ...parsed, id: nextId });
 		} catch (e) {
-			if (e instanceof ZodError) {
-				return fail(400, {
-					error: e.errors[0].message,
-					name,
-					email
-				});
-			}
-			return fail(500, {
-				error: 'Something went wrong',
+			return fail(400, {
+				error: e instanceof ZodError ? e.errors[0].message : 'Something went wrong',
 				name,
 				email
 			});
@@ -57,12 +50,8 @@ export const actions: Actions = {
 		throw redirect(302, '/day/14');
 	},
 	delete: async ({ request, cookies }) => {
+		// await new Promise((res) => setTimeout(res, 500));
 		let names = getNamesFromCookie(cookies);
-		if (!names) {
-			// need to return name/email to prevent type error
-			// not sure if there's a more elegant way
-			return fail(500, { error: 'No names to delete', name: '', email: '' });
-		}
 
 		const data = await request.formData();
 		const id = z.coerce.number().parse(data.get('id'));

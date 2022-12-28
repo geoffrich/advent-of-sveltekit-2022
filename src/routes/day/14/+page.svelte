@@ -46,7 +46,24 @@
 
 <a href="/day/14/match">Generate List</a>
 
-<form use:enhance action="?/delete" method="post">
+<form
+	use:enhance={({ data: formData }) => {
+		let oldNames = data.names;
+		// optimistic UI: preemptively filter out deleted value
+		data.names = data.names.filter((n) => n.id.toString() !== formData.get('id'));
+
+		return async ({ update, result }) => {
+			if (result.type === 'failure') {
+				// load doesn't re-run, so put the original names back
+				// this might run into issues with concurrent updates
+				data.names = oldNames;
+			}
+			await update();
+		};
+	}}
+	action="?/delete"
+	method="post"
+>
 	<ul>
 		{#each data.names as { name, email, id } (id)}
 			<li animate:flip transition:slide|local>
