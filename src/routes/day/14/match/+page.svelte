@@ -18,8 +18,8 @@
 	{/each}
 </ul>
 
-<form>
-	<button on:click={() => invalidate(data.key)}>Shuffle 🎲</button>
+<form on:submit|preventDefault={() => invalidate(data.key)}>
+	<button>Shuffle 🎲</button>
 </form>
 <a href="/day/14">Go back</a>
 
