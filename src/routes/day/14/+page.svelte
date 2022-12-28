@@ -2,7 +2,8 @@
 	import type { ActionData, PageData } from './$types';
 	import { enhance } from '$app/forms';
 	import { flip } from 'svelte/animate';
-	import { slide } from 'svelte/transition';
+	import { slide, fade } from 'svelte/transition';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -44,7 +45,7 @@
 	<p class="error" in:slide>{form?.error}</p>
 {/if}
 
-<a href="/day/14/match">Generate List</a>
+<a href="/day/14/match" class="button">Generate List</a>
 
 <form
 	use:enhance={({ data: formData }) => {
@@ -57,16 +58,21 @@
 				// load doesn't re-run, so put the original names back
 				// this might run into issues with concurrent updates
 				data.names = oldNames;
+			} else if (result.type === 'redirect') {
+				// current applyAction doesn't respect data-sveltekit-noscroll - maybe a bug?
+				goto(result.location, { invalidateAll: true, noScroll: true });
+				return;
 			}
 			await update();
 		};
 	}}
 	action="?/delete"
 	method="post"
+	data-sveltekit-noscroll
 >
-	<ul>
+	<ul class="names">
 		{#each data.names as { name, email, id } (id)}
-			<li animate:flip transition:slide|local>
+			<li animate:flip transition:fade|local>
 				<span
 					><span class="name">{name}</span>
 					<span class="email">{email}</span></span
@@ -99,7 +105,7 @@
 
 	.name-form button {
 		flex-grow: 1;
-		flex-basis: 100px;
+		flex-basis: 120px;
 	}
 
 	.name-form button[type='submit'] {
@@ -118,7 +124,6 @@
 
 	li {
 		border: 3px solid var(--green-6);
-		text-align: center;
 		padding: 0.5rem 1rem;
 		border-radius: var(--radius-round);
 		display: flex;
@@ -141,5 +146,39 @@
 		padding: 0.5rem 1rem;
 		border-radius: var(--radius-2);
 		text-align: center;
+	}
+
+	button,
+	.button {
+		font-size: var(--font-size-2);
+		padding: 0.5rem 1rem;
+		color: white;
+		background: var(--color);
+		appearance: none;
+		border: none;
+		border-radius: var(--radius-2);
+		cursor: pointer;
+		text-decoration: none;
+
+		--color: var(--blue-8);
+		--hover: var(--blue-9);
+	}
+
+	button:hover,
+	.button:hover {
+		background-color: var(--hover);
+	}
+
+	.names button {
+		--color: var(--violet-8);
+		--hover: var(--violet-9);
+	}
+
+	.button {
+		--color: var(--red-8);
+		--hover: var(--red-9);
+
+		font-size: var(--font-size-3);
+		font-weight: 700;
 	}
 </style>

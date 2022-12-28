@@ -19,7 +19,7 @@
 </ul>
 
 <form>
-	<button on:click={() => invalidate(data.key)}>Shuffle</button>
+	<button on:click={() => invalidate(data.key)}>Shuffle 🎲</button>
 </form>
 <a href="/day/14">Go back</a>
 
@@ -35,5 +35,30 @@
 
 	ul > * + * {
 		margin-top: 0.5rem;
+	}
+
+	button,
+	a {
+		font-size: var(--font-size-2);
+		padding: 0.5rem 1rem;
+		color: white;
+		background: var(--color);
+		appearance: none;
+		border: none;
+		border-radius: var(--radius-2);
+		cursor: pointer;
+		text-decoration: none;
+
+		--color: var(--red-8);
+		--hover: var(--red-9);
+	}
+
+	button:hover {
+		background-color: var(--hover);
+	}
+
+	a {
+		--color: var(--green-8);
+		--hover: var(--green-9);
 	}
 </style>
