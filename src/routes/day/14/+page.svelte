@@ -25,7 +25,21 @@
 	> will match the participants.
 </p>
 
-<form use:enhance action="?/add" method="post" class="name-form">
+<form
+	use:enhance={() => {
+		return async ({ update, result }) => {
+			if (result.type === 'redirect') {
+				// current applyAction doesn't respect data-sveltekit-noscroll - maybe a bug?
+				goto(result.location, { invalidateAll: true, noScroll: true, keepFocus: true });
+				return;
+			}
+			await update();
+		};
+	}}
+	action="?/add"
+	method="post"
+	class="name-form"
+>
 	<div class="input">
 		<label for="name">Name</label>
 		<input id="name" name="name" type="text" bind:value={name} />
