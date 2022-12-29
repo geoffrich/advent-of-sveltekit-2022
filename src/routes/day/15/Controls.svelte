@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { scale } from 'svelte/transition';
 	import Backward from './icons/Backward.svelte';
 	import ChevronLeft from './icons/ChevronLeft.svelte';
@@ -6,33 +6,76 @@
 	import Forward from './icons/Forward.svelte';
 	import Pause from './icons/Pause.svelte';
 	import Play from './icons/Play.svelte';
-	import { selectedSong } from './songs';
-	let playing = false;
+	import { selectedSong, paused } from './songs';
+	// had to wrap in browser or duration wasn't populated properly
+	import { browser } from '$app/environment';
+	import { tick } from 'svelte';
+	$: playing = !$paused;
 
-	let progress = 50;
+	$: progress = currentTime / duration;
+	let currentTime = 0;
+	let duration = 1;
+	let played: TimeRanges;
 
-	let timeDisplay = '00:00';
-	let volume = 50;
+	// TODO: go to next track once finished
+	// TODO: better mobile layout
+
+	let volume = 0.5;
+	let audio: HTMLAudioElement;
 
 	function togglePlay() {
-		playing = !playing;
+		$paused = !$paused;
+	}
+
+	function offAndOnAgain() {
+		// paused doesn't properly reset - https://github.com/sveltejs/svelte/issues/5914
+		$paused = !$paused;
+		tick().then(() => ($paused = !$paused));
+	}
+
+	// was getting a permissions issue in Firefox if I triggered this on initial hydration
+	$: if ($selectedSong && played && played.length > 0) {
+		offAndOnAgain();
 	}
 
 	function prev() {
 		selectedSong.prev();
 	}
 
-	function rw() {}
+	function rw() {
+		// need to access element directly due to https://github.com/sveltejs/svelte/issues/6955
+		audio.currentTime -= 10;
+	}
 
-	function ff() {}
+	function ff() {
+		audio.currentTime += 10;
+	}
 
 	function next() {
 		selectedSong.next();
 	}
+
+	function prettifyTime(time: number) {
+		const seconds = Math.floor(time);
+		const minutes = Math.floor(seconds / 60);
+		const remainder = seconds - minutes * 60;
+		return `${minutes.toString().padStart(2, '0')}:${remainder.toString().padStart(2, '0')}`;
+	}
 </script>
 
+{#if browser}
+	<audio
+		src={$selectedSong.file}
+		bind:paused={$paused}
+		bind:volume
+		bind:currentTime
+		bind:duration
+		bind:this={audio}
+		bind:played
+	/>
+{/if}
 <div class="controls">
-	<div class="progress" style:width="{progress}%" />
+	<div class="progress" style:width="{progress * 100}%" />
 	<div class="buttons">
 		<button aria-label="Previous song" on:click={prev}><ChevronLeft /></button>
 		<button aria-label="Rewind" on:click={rw}>
@@ -57,12 +100,13 @@
 	<input
 		type="range"
 		aria-label="Volume"
-		style:background="linear-gradient(90deg, rgba(66, 184, 131, 1) 0%, rgba(66, 184, 131, 1) {volume}%,
-		transparent {volume}%)"
-		bind:value={volume}
+		style:background="linear-gradient(90deg, rgba(66, 184, 131, 1) 0%, rgba(66, 184, 131, 1) {volume *
+			100}%, transparent {volume * 100}%)"
+		value={volume * 100}
+		on:input={(e) => (volume = e.target.value / 100)}
 	/>
 	<div class="time">
-		{timeDisplay}
+		{prettifyTime(currentTime)} - {prettifyTime(duration)}
 	</div>
 </div>
 

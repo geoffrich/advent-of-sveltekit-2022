@@ -39,11 +39,15 @@ const selectedSongStore = derived(selectedIdx, ($selectedIdx) => songs[$selected
 export const selectedSong = {
 	subscribe: selectedSongStore.subscribe,
 	next: () => {
-		console.log('test');
 		selectedIdx.update((curr) => (curr + 1) % songs.length);
 	},
 	prev: () => {
-		console.log('test');
 		selectedIdx.update((curr) => (curr - 1 + songs.length) % songs.length);
+	},
+	set: (song: typeof songs[0]) => {
+		const idx = songs.findIndex((s) => s === song);
+		selectedIdx.set(idx);
 	}
 };
+
+export const paused = writable(true);

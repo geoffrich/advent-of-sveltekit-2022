@@ -1,14 +1,21 @@
 <script lang="ts">
 	import Play from './icons/Play.svelte';
 	import Playing from './icons/Playing.svelte';
-	import { songs, selectedSong } from './songs';
+	import { songs, selectedSong, paused } from './songs';
+
+	// note: on:click on an li is bad for a11y, but I didn't have time to rearchitect the starter project to work better
+	function handleClick(song: typeof songs[0]) {
+		$selectedSong = song;
+		$paused = false;
+	}
 </script>
 
 <ul>
-	{#each songs as song, idx}
+	{#each songs as song}
 		{@const isSelected = song.title === $selectedSong.title}
-		{@const isPlaying = idx < 3}
-		<li class:selected={isSelected}>
+		{@const isPlaying = !$paused && isSelected}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<li class:selected={isSelected} on:click={() => handleClick(song)}>
 			<div class="album">
 				{#if isSelected}
 					<div class="overlay" />
