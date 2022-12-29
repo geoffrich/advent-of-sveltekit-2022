@@ -13,5 +13,6 @@ export const days = [
 	'Christmas tree lights',
 	"Find Joseph's gift",
 	'Christmas tree ornaments',
-	'Secret santa list generator'
+	'Secret santa list generator',
+	'Christmas radio'
 ];
