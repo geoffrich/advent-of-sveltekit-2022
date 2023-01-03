@@ -145,7 +145,6 @@
 		grid-template-areas:
 			'p p p'
 			'time buttons volume';
-		padding: 0 1rem;
 		column-gap: 0.5rem;
 	}
 
@@ -183,6 +182,7 @@
 		border-radius: 3px;
 		width: 6rem;
 		grid-area: volume;
+		padding-right: 1rem;
 		justify-self: end;
 	}
 	input[type='range']::-webkit-slider-thumb {
@@ -235,5 +235,6 @@
 		width: 6rem;
 		white-space: nowrap;
 		grid-area: time;
+		padding-left: 1rem;
 	}
 </style>
