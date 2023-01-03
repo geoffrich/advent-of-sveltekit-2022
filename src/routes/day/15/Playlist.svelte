@@ -39,6 +39,7 @@
 <style>
 	ul {
 		width: 100%;
+		padding: 0;
 	}
 
 	ul :global(svg) {

@@ -16,8 +16,6 @@
 	let currentTime = 0;
 	let duration = 1;
 
-	// TODO: better mobile layout
-
 	let volume = 0.5;
 	let audio: HTMLAudioElement;
 
@@ -100,6 +98,9 @@
 
 <div class="controls">
 	<div class="progress" style:width="{progress * 100}%" />
+	<div class="time">
+		{prettifyTime(currentTime)} - {prettifyTime(duration)}
+	</div>
 	<div class="buttons">
 		<button aria-label="Previous song" on:click={prev}><ChevronLeft /></button>
 		<button aria-label="Rewind" on:click={rw}>
@@ -129,9 +130,6 @@
 		value={volume * 100}
 		on:input={handleRangeInput}
 	/>
-	<div class="time">
-		{prettifyTime(currentTime)} - {prettifyTime(duration)}
-	</div>
 </div>
 
 <style>
@@ -141,19 +139,41 @@
 		border-radius: var(--radius-2);
 		background: var(--gray-8);
 		color: white;
+		display: grid;
+		align-items: center;
+		grid-template-columns: auto 1fr auto;
+		grid-template-areas:
+			'p p p'
+			'time buttons volume';
+		padding: 0 1rem;
+		column-gap: 0.5rem;
 	}
+
+	@media screen and (max-width: 480px) {
+		.controls {
+			grid-template-columns: 1fr 1fr;
+			grid-template-areas:
+				'p p'
+				'buttons buttons'
+				'time volume';
+		}
+	}
+
 	.progress {
 		background: linear-gradient(90deg, rgba(66, 184, 131, 1) 0%, rgba(0, 48, 255, 1) 100%);
 		border-radius: var(--radius-2);
 		height: 0.25rem;
 		background: var(--gray-4);
 		position: relative;
+		grid-column: 1 / -1;
+		grid-area: p;
 	}
 
 	.buttons {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		grid-area: buttons;
 	}
 	input[type='range'] {
 		-webkit-appearance: none; /* Hides the slider so that custom slider can be made */
@@ -161,11 +181,9 @@
 		background: v-bind(volumneGradient);
 		height: 4px;
 		border-radius: 3px;
-		position: absolute;
-		right: 1rem;
 		width: 6rem;
-		top: 50%;
-		transform: translateY(-50%);
+		grid-area: volume;
+		justify-self: end;
 	}
 	input[type='range']::-webkit-slider-thumb {
 		-webkit-appearance: none;
@@ -214,11 +232,8 @@
 	}
 
 	.time {
-		position: absolute;
-		left: 1rem;
 		width: 6rem;
-		top: 50%;
 		white-space: nowrap;
-		transform: translateY(-50%);
+		grid-area: time;
 	}
 </style>
