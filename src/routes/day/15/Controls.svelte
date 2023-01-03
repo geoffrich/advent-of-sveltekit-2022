@@ -20,6 +20,8 @@
 	let volume = 0.5;
 	let audio: HTMLAudioElement;
 
+	let loading = true;
+
 	function togglePlay() {
 		$paused = !$paused;
 	}
@@ -28,8 +30,10 @@
 		selectedSong.next();
 	}
 
+	let timer: number;
 	onMount(() => {
 		let once = true;
+
 		// was having issues with regular store autosub for some reason
 		// e.g. if ($selectedSong) { offAndOnAgain(); }
 		// The statement was not running
@@ -43,6 +47,11 @@
 			}
 			// reset current time to prevent race condition where next song starts in the middle
 			currentTime = 0;
+
+			// wait to set loading state so we don't get a flash of "loading" in the UI
+			clearTimeout(timer);
+			timer = setTimeout(() => (loading = true), 250);
+
 			// paused doesn't properly update when audio source changes - https://github.com/sveltejs/svelte/issues/5914
 			// so toggle it off and then back on on the next tick
 			$paused = true;
@@ -92,13 +101,22 @@
 		bind:currentTime
 		bind:duration
 		bind:this={audio}
+		on:canplay={() => {
+			loading = false;
+			clearTimeout(timer);
+		}}
 	/>
 {/if}
 
 <div class="controls">
 	<div class="progress" style:width="{progress * 100}%" />
 	<div class="time">
-		{prettifyTime(currentTime)} - {prettifyTime(duration)}
+		<!-- only show when playing because iOS safari won't fire the canplay event if we're not playing -->
+		{#if loading && !$paused}
+			Loading...
+		{:else}
+			{prettifyTime(currentTime)} - {prettifyTime(duration)}
+		{/if}
 	</div>
 	<div class="buttons">
 		<button aria-label="Previous song" on:click={prev}><ChevronLeft /></button>
