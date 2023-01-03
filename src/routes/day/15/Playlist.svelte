@@ -37,7 +37,7 @@
 
 <style>
 	ul {
-		width: 100%;
+		/* width: 100%; */
 		padding: 0;
 	}
 
