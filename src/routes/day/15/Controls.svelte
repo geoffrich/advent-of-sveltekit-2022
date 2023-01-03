@@ -122,14 +122,21 @@
 		</button>
 		<button aria-label="Next song" on:click={() => next()}><ChevronRight /></button>
 	</div>
-	<input
-		type="range"
-		aria-label="Volume"
-		style:background="linear-gradient(90deg, rgba(66, 184, 131, 1) 0%, rgba(66, 184, 131, 1) {volume *
-			100}%, transparent {volume * 100}%)"
-		value={volume * 100}
-		on:input={handleRangeInput}
-	/>
+	<div class="volume">
+		<input
+			type="range"
+			aria-label="Volume"
+			style:background="linear-gradient(90deg, rgba(66, 184, 131, 1) 0%, rgba(66, 184, 131, 1) {volume *
+				100}%, transparent {volume * 100}%)"
+			value={volume * 100}
+			on:input={handleRangeInput}
+		/>
+		<span
+			>{Math.floor(volume * 100)
+				.toString()
+				.padStart(3, '0')}</span
+		>
+	</div>
 </div>
 
 <style>
@@ -141,7 +148,7 @@
 		color: white;
 		display: grid;
 		align-items: center;
-		grid-template-columns: auto 1fr auto;
+		grid-template-columns: 1fr auto 1fr;
 		grid-template-areas:
 			'p p p'
 			'time buttons volume';
@@ -174,16 +181,27 @@
 		justify-content: center;
 		grid-area: buttons;
 	}
-	input[type='range'] {
-		-webkit-appearance: none; /* Hides the slider so that custom slider can be made */
-		border: rgba(66, 184, 131, 1) 1px solid;
-		background: v-bind(volumneGradient);
-		height: 4px;
-		border-radius: 3px;
-		width: 6rem;
+
+	.volume {
 		grid-area: volume;
 		padding-right: 1rem;
 		justify-self: end;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.volume span {
+		/* Prevent changing numbers from changing width */
+		font-variant-numeric: tabular-nums;
+	}
+
+	input[type='range'] {
+		-webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+		border: rgba(66, 184, 131, 1) 1px solid;
+		height: 4px;
+		border-radius: 3px;
+		width: 6rem;
 	}
 	input[type='range']::-webkit-slider-thumb {
 		-webkit-appearance: none;
