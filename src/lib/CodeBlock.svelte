@@ -20,5 +20,7 @@
 		padding: 0.5rem;
 		border-radius: var(--radius-3);
 		tab-size: 2rem;
+		overflow-x: auto;
+		width: 100%;
 	}
 </style>
