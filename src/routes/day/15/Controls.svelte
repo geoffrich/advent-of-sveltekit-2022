@@ -7,17 +7,15 @@
 	import Pause from './icons/Pause.svelte';
 	import Play from './icons/Play.svelte';
 	import { selectedSong, paused } from './songs';
-	// had to wrap in browser or duration wasn't populated properly
+	// had to wrap audio tag in browser or duration wasn't populated properly
 	import { browser } from '$app/environment';
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	$: playing = !$paused;
 
 	$: progress = currentTime / duration;
 	let currentTime = 0;
 	let duration = 1;
-	let played: TimeRanges;
 
-	// TODO: go to next track once finished
 	// TODO: better mobile layout
 
 	let volume = 0.5;
@@ -28,15 +26,36 @@
 	}
 
 	function offAndOnAgain() {
-		// paused doesn't properly reset - https://github.com/sveltejs/svelte/issues/5914
 		$paused = !$paused;
 		tick().then(() => ($paused = !$paused));
 	}
 
-	// was getting a permissions issue in Firefox if I triggered this on initial hydration
-	$: if ($selectedSong && played && played.length > 0) {
-		offAndOnAgain();
+	$: if (currentTime >= duration) {
+		selectedSong.next();
 	}
+
+	onMount(() => {
+		let once = true;
+		// was having issues with regular autosub for some reason
+		// e.g. if ($selectedSong) { offAndOnAgain(); }
+		// The statement was not running
+		const unsub = selectedSong.subscribe((val) => {
+			if (once) {
+				// don't run first time to prevent FF error
+				// "The play method is not allowed by the user agent or the platform in the current context, possibly because the user denied permission."
+				once = false;
+				return;
+			}
+			// reset current time to prevent race condition where next song starts in the middle
+			currentTime = 0;
+			// paused doesn't properly update when audio source changes - https://github.com/sveltejs/svelte/issues/5914
+			offAndOnAgain();
+		});
+
+		return () => {
+			unsub();
+		};
+	});
 
 	function prev() {
 		selectedSong.prev();
@@ -55,6 +74,11 @@
 		selectedSong.next();
 	}
 
+	function handleRangeInput({ target }: InputEvent) {
+		if (!target) return;
+		volume = (target as HTMLInputElement).valueAsNumber / 100;
+	}
+
 	function prettifyTime(time: number) {
 		const seconds = Math.floor(time);
 		const minutes = Math.floor(seconds / 60);
@@ -71,9 +95,9 @@
 		bind:currentTime
 		bind:duration
 		bind:this={audio}
-		bind:played
 	/>
 {/if}
+
 <div class="controls">
 	<div class="progress" style:width="{progress * 100}%" />
 	<div class="buttons">
@@ -103,7 +127,7 @@
 		style:background="linear-gradient(90deg, rgba(66, 184, 131, 1) 0%, rgba(66, 184, 131, 1) {volume *
 			100}%, transparent {volume * 100}%)"
 		value={volume * 100}
-		on:input={(e) => (volume = e.target.value / 100)}
+		on:input={handleRangeInput}
 	/>
 	<div class="time">
 		{prettifyTime(currentTime)} - {prettifyTime(duration)}

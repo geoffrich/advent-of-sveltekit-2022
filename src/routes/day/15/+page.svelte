@@ -3,6 +3,10 @@
 	import Controls from './Controls.svelte';
 </script>
 
+<svelte:head>
+	<link rel="preconnect" href="https://fi.zophar.net/" />
+</svelte:head>
+
 <h1>Christmas <a href="https://en.wikipedia.org/wiki/Video_game_music">VGM</a> Radio</h1>
 <Playlist />
 <Controls />

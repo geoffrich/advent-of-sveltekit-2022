@@ -33,7 +33,7 @@ export const songs = [
 	}
 ];
 
-const selectedIdx = writable(1);
+const selectedIdx = writable(0);
 const selectedSongStore = derived(selectedIdx, ($selectedIdx) => songs[$selectedIdx]);
 
 export const selectedSong = {
