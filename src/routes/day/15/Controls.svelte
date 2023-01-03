@@ -16,16 +16,12 @@
 	let currentTime = 0;
 	let duration = 1;
 
+	// note: this won't work on iOS since you can't adjust volume via JS
 	let volume = 0.5;
 	let audio: HTMLAudioElement;
 
 	function togglePlay() {
 		$paused = !$paused;
-	}
-
-	function offAndOnAgain() {
-		$paused = !$paused;
-		tick().then(() => ($paused = !$paused));
 	}
 
 	$: if (currentTime >= duration) {
@@ -34,10 +30,11 @@
 
 	onMount(() => {
 		let once = true;
-		// was having issues with regular autosub for some reason
+		// was having issues with regular store autosub for some reason
 		// e.g. if ($selectedSong) { offAndOnAgain(); }
 		// The statement was not running
 		const unsub = selectedSong.subscribe((val) => {
+			console.log({ val });
 			if (once) {
 				// don't run first time to prevent FF error
 				// "The play method is not allowed by the user agent or the platform in the current context, possibly because the user denied permission."
@@ -47,7 +44,9 @@
 			// reset current time to prevent race condition where next song starts in the middle
 			currentTime = 0;
 			// paused doesn't properly update when audio source changes - https://github.com/sveltejs/svelte/issues/5914
-			offAndOnAgain();
+			// so toggle it off and then back on on the next tick
+			$paused = true;
+			tick().then(() => ($paused = false));
 		});
 
 		return () => {

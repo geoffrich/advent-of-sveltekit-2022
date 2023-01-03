@@ -6,7 +6,6 @@
 	// note: on:click on an li is bad for a11y, but I didn't have time to rearchitect the starter project to work better
 	function handleClick(song: typeof songs[0]) {
 		$selectedSong = song;
-		$paused = false;
 	}
 </script>
 
