@@ -21,6 +21,14 @@
 		border-radius: var(--radius-3);
 		tab-size: 2rem;
 		overflow-x: auto;
-		width: 100%;
+	}
+
+	code {
+		display: block;
+		/* This used to be width: 100%; but then the page looked zoomed out on mobile */
+		width: calc(100vw - 4rem);
+		max-width: 50rem;
+		margin-left: 50%;
+		transform: translateX(-50%);
 	}
 </style>
