@@ -27,7 +27,12 @@
 			</div>
 			<div class="title">
 				{song.title}
-				<a href="?current={song.id}" data-sveltekit-noscroll
+				<a
+					href="?current={song.id}"
+					data-sveltekit-noscroll
+					on:click|preventDefault={() =>
+						/* we don't want each song selection to push to history state, so override default */
+						goto(`?current=${song.id}`, { keepFocus: true, replaceState: true, noScroll: true })}
 					><span class="visually-hidden">Play {song.title}</span></a
 				>
 			</div>

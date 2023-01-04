@@ -2,11 +2,12 @@
 	import Playlist from './Playlist.svelte';
 	import Controls from './Controls.svelte';
 	import type { PageData } from './$types';
-	import { makeSongStore } from './songs';
+	import { makeSongStore, paused } from './songs';
 
 	export let data: PageData;
 
 	const selectedSong = makeSongStore(data.current);
+	$paused = true; // reset when first loading the page
 
 	$: selectedSong.set(data.current);
 
