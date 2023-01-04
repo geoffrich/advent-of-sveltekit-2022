@@ -1,0 +1,35 @@
+.red-green {
+	background: rgb(21, 202, 130);
+	background: linear-gradient(90deg, rgba(21, 202, 130, 1) 0%, rgba(255, 123, 154, 1) 100%);
+}
+
+.green {
+	background: rgb(116, 214, 128);
+	background: linear-gradient(90deg, rgba(116, 214, 128, 1) 0%, rgba(55, 139, 41, 1) 100%);
+}
+
+.red {
+	background: rgb(255, 0, 0);
+	background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 120, 120, 1) 100%);
+}
+
+/* Inspired by: https://codepen.io/alvarotrigo/pen/PoKMyNO */
+.christmas-text {
+	text-transform: uppercase;
+	background-size: 200% auto;
+	color: #fff;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: textclip 2s ease infinite;
+	display: inline-block;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 4rem;
+	line-height: 3.5rem;
+}
+
+@keyframes textclip {
+	to {
+		background-position: 200% center;
+	}
+}
