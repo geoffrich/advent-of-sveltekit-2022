@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Play from './icons/Play.svelte';
 	import Playing from './icons/Playing.svelte';
 	import { type SongStore, songs, paused } from './songs';
@@ -26,7 +27,9 @@
 			</div>
 			<div class="title">
 				{song.title}
-				<a href="?current={song.id}"><span class="visually-hidden">Play {song.title}</span></a>
+				<a href="?current={song.id}" data-sveltekit-noscroll
+					><span class="visually-hidden">Play {song.title}</span></a
+				>
 			</div>
 		</li>
 	{/each}
