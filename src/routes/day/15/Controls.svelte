@@ -6,10 +6,14 @@
 	import Forward from './icons/Forward.svelte';
 	import Pause from './icons/Pause.svelte';
 	import Play from './icons/Play.svelte';
-	import { selectedSong, paused } from './songs';
+	import { type SongStore, paused } from './songs';
+
 	// had to wrap audio tag in browser or duration wasn't populated properly
 	import { browser } from '$app/environment';
 	import { onMount, tick } from 'svelte';
+	import { submitReplaceState } from '$lib/util';
+
+	export let selectedSong: SongStore;
 	$: playing = !$paused;
 
 	$: progress = currentTime / duration;
@@ -34,11 +38,20 @@
 	onMount(() => {
 		let once = true;
 
+		if (duration === 1 && !isNaN(audio.duration)) {
+			// firefox doesn't populate this sometimes for some reason
+			duration = audio.duration;
+		}
+
+		if (audio.readyState >= 2) {
+			// sometimes audio is already ready and canplay event not fired in Firefox
+			loading = false;
+		}
+
 		// was having issues with regular store autosub for some reason
 		// e.g. if ($selectedSong) { offAndOnAgain(); }
 		// The statement was not running
 		const unsub = selectedSong.subscribe((val) => {
-			console.log({ val });
 			if (once) {
 				// don't run first time to prevent FF error
 				// "The play method is not allowed by the user agent or the platform in the current context, possibly because the user denied permission."
@@ -63,10 +76,6 @@
 		};
 	});
 
-	function prev() {
-		selectedSong.prev();
-	}
-
 	function rw() {
 		// need to access element directly due to https://github.com/sveltejs/svelte/issues/6955
 		audio.currentTime -= 10;
@@ -74,10 +83,6 @@
 
 	function ff() {
 		audio.currentTime += 10;
-	}
-
-	function next() {
-		selectedSong.next();
 	}
 
 	function handleRangeInput({ target }: InputEvent) {
@@ -106,11 +111,14 @@
 			clearTimeout(timer);
 		}}
 	/>
+{:else}
+	<audio autoplay src={$selectedSong.file} controls class="no-js" />
 {/if}
 
-<div class="controls">
-	<div class="progress" style:width="{progress * 100}%" />
-	<div class="time">
+<form class="controls" on:submit={submitReplaceState}>
+	<input type="hidden" name="current" value={$selectedSong.id} />
+	<div class="progress js-only" style:width="{progress * 100}%" />
+	<div class="time js-only">
 		<!-- only show when playing because iOS safari won't fire the canplay event if we're not playing -->
 		{#if loading && !$paused}
 			Loading...
@@ -119,11 +127,16 @@
 		{/if}
 	</div>
 	<div class="buttons">
-		<button aria-label="Previous song" on:click={prev}><ChevronLeft /></button>
-		<button aria-label="Rewind" on:click={rw}>
+		<button aria-label="Previous song" name="change" value="-1"><ChevronLeft /></button>
+		<button aria-label="Rewind" on:click={rw} class="js-only" type="button">
 			<Backward />
 		</button>
-		<button aria-label={playing ? 'Pause' : 'Play'} on:click={togglePlay} class="play">
+		<button
+			aria-label={playing ? 'Pause' : 'Play'}
+			on:click={togglePlay}
+			class="play js-only"
+			type="button"
+		>
 			{#key playing}
 				<div transition:scale>
 					{#if playing}
@@ -134,12 +147,12 @@
 				</div>
 			{/key}
 		</button>
-		<button aria-label="Fast forward" on:click={ff}>
+		<button aria-label="Fast forward" on:click={ff} class="js-only" type="button">
 			<Forward />
 		</button>
-		<button aria-label="Next song" on:click={() => next()}><ChevronRight /></button>
+		<button aria-label="Next song" name="change" value="1"><ChevronRight /></button>
 	</div>
-	<div class="volume">
+	<div class="volume js-only">
 		<input
 			type="range"
 			aria-label="Volume"
@@ -147,6 +160,7 @@
 				100}%, transparent {volume * 100}%)"
 			value={volume * 100}
 			on:input={handleRangeInput}
+			disabled={!browser}
 		/>
 		<span
 			>{Math.floor(volume * 100)
@@ -154,7 +168,7 @@
 				.padStart(3, '0')}</span
 		>
 	</div>
-</div>
+</form>
 
 <style>
 	.controls {

@@ -31,23 +31,24 @@ export const songs = [
 		file: 'https://fi.zophar.net/soundfiles/nintendo-64-usf/legend-of-zelda-the-majoras-mask/206%20Snowhead%20Temple.mp3',
 		cover: majorasMask
 	}
-];
-
-const selectedIdx = writable(0);
-const selectedSongStore = derived(selectedIdx, ($selectedIdx) => songs[$selectedIdx]);
-
-export const selectedSong = {
-	subscribe: selectedSongStore.subscribe,
-	next: () => {
-		selectedIdx.update((curr) => (curr + 1) % songs.length);
-	},
-	prev: () => {
-		selectedIdx.update((curr) => (curr - 1 + songs.length) % songs.length);
-	},
-	set: (song: typeof songs[0]) => {
-		const idx = songs.findIndex((s) => s === song);
-		selectedIdx.set(idx);
-	}
-};
+].map((song, idx) => ({ ...song, id: idx }));
 
 export const paused = writable(true);
+
+export function makeSongStore(initialIndex = 0) {
+	const selectedIdx = writable(initialIndex);
+	const selectedSongStore = derived(selectedIdx, ($selectedIdx) => songs[$selectedIdx]);
+
+	return {
+		subscribe: selectedSongStore.subscribe,
+		next: () => {
+			selectedIdx.update((curr) => (curr + 1) % songs.length);
+		},
+		prev: () => {
+			selectedIdx.update((curr) => (curr - 1 + songs.length) % songs.length);
+		},
+		set: selectedIdx.set
+	};
+}
+
+export type SongStore = ReturnType<typeof makeSongStore>;

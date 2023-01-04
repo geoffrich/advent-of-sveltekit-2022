@@ -87,3 +87,11 @@ h1 {
 .flow > * + * {
 	margin-top: var(--flow-space, 1em);
 }
+
+.has-js .no-js {
+	display: none;
+}
+
+.no-js .js-only {
+	display: none !important;
+}
