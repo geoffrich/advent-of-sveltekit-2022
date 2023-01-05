@@ -15,5 +15,6 @@ export const days = [
 	'Christmas tree ornaments',
 	'Secret santa list generator',
 	'Christmas radio',
-	'Custom christmas action'
+	'Custom christmas action',
+	'Renderless geolocation'
 ];
