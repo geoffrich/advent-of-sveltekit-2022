@@ -91,7 +91,13 @@
 </nav>
 
 <slot />
-<h2>Source code</h2>
+<h2><a href={days[day].repo}>Challenge</a></h2>
+<h2>
+	<a
+		href="https://github.com/geoffrich/advent-of-sveltekit-2022/tree/main/src/routes/day/{day}/%2Bpage.svelte"
+		>Source code</a
+	>
+</h2>
 {#each data.code as { filename, source }}
 	{@const splitFilename = filename.split('.')}
 	<h3>
@@ -111,7 +117,11 @@
 	}
 
 	h2 {
-		margin-top: 2rem;
+		margin-top: 1.2rem;
+	}
+
+	a {
+		color: black;
 	}
 
 	code {

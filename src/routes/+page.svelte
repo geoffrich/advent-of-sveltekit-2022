@@ -13,11 +13,14 @@
 <ol start="0">
 	{#each days as day, idx}
 		<li>
-			<a href="/day/{idx}">{day}</a>
-			<a
-				class="code"
-				href="https://github.com/geoffrich/advent-of-sveltekit-2022/tree/main/src/routes/day/{idx}/+page.svelte"
-				>(code) <span class="visually-hidden">for solution {idx}</span></a
+			<a href="/day/{idx}" class="title">{day.title}</a>
+			<span class="code"
+				>(<a
+					href="https://github.com/geoffrich/advent-of-sveltekit-2022/tree/main/src/routes/day/{idx}/+page.svelte"
+					>code<span class="visually-hidden"> for solution {idx}</span></a
+				>,
+				<a href={day.repo}>challenge<span class="visually-hidden"> for solution {idx}</span></a
+				>)</span
 			>
 		</li>
 	{/each}
