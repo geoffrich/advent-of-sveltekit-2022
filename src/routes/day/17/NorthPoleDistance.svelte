@@ -1,14 +1,11 @@
 <script lang="ts">
 	import { getDistanceKm, getDistanceMiles } from './distance';
-	import { useGeolocation } from './geolocation';
+	import { geolocation } from './geolocation';
 
-	const geo = useGeolocation();
-
-	$: ({ coords, isSupported } = $geo);
 	$: distance =
 		unit === 'km'
-			? getDistanceKm(coords.latitude, coords.longitude)
-			: getDistanceMiles(coords.latitude, coords.longitude);
+			? getDistanceKm($geolocation.latitude, $geolocation.longitude)
+			: getDistanceMiles($geolocation.latitude, $geolocation.longitude);
 
 	let unit: 'km' | 'mile' = 'mile';
 
@@ -21,8 +18,8 @@
 	}
 </script>
 
-{#if isSupported}
-	<slot {distance} {toggleUnit} {unit} />
-{:else}
+{#if isNaN(distance)}
 	<p>Waiting for location data...</p>
+{:else}
+	<slot {distance} {toggleUnit} {unit} />
 {/if}
